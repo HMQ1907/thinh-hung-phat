@@ -29,6 +29,11 @@
                 Sản phẩm
               </NuxtLink>
             </li>
+                  <li>
+                    <NuxtLink to="/projects" class="text-muted-foreground hover:text-primary">
+                      Dự án
+                    </NuxtLink>
+                  </li>
             <li>
               <NuxtLink to="/blog" class="text-muted-foreground hover:text-primary">
                 Tin tức

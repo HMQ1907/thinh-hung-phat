@@ -41,6 +41,7 @@ export default defineNuxtConfig({
     },
   },
 
+
   nitro: {
     storage: {
       // Option 1: Filesystem cache (lưu trên đĩa, tồn tại sau khi restart)

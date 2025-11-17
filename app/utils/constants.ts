@@ -1,4 +1,4 @@
-export const DEFAULT_SCHEMA = "thinh_hung_phat";
+export const DEFAULT_SCHEMA = "public";
 
 // Helper function to generate slug from title
 export const generateSlug = (text: string): string => {

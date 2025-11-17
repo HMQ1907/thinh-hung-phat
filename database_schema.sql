@@ -54,6 +54,21 @@ CREATE TABLE IF NOT EXISTS products (
   updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );
 
+-- Bảng Projects (dự án tiêu biểu)
+CREATE TABLE IF NOT EXISTS projects (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  name TEXT NOT NULL,
+  slug TEXT UNIQUE NOT NULL,
+  description TEXT,
+  location TEXT,
+  thumbnail TEXT,
+  gallery TEXT[],
+  status TEXT DEFAULT 'active' CHECK (status IN ('active', 'inactive')),
+  completed_at DATE,
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+  updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
 -- Bảng Contacts (liên hệ)
 CREATE TABLE IF NOT EXISTS contacts (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -70,12 +85,14 @@ CREATE INDEX IF NOT EXISTS idx_posts_status ON posts(status);
 CREATE INDEX IF NOT EXISTS idx_posts_category ON posts(category_id);
 CREATE INDEX IF NOT EXISTS idx_posts_created ON posts(created_at DESC);
 CREATE INDEX IF NOT EXISTS idx_products_status ON products(status);
+CREATE INDEX IF NOT EXISTS idx_projects_status ON projects(status);
 
 -- RLS Policies (Row Level Security)
 ALTER TABLE users ENABLE ROW LEVEL SECURITY;
 ALTER TABLE categories ENABLE ROW LEVEL SECURITY;
 ALTER TABLE posts ENABLE ROW LEVEL SECURITY;
 ALTER TABLE products ENABLE ROW LEVEL SECURITY;
+ALTER TABLE projects ENABLE ROW LEVEL SECURITY;
 ALTER TABLE contacts ENABLE ROW LEVEL SECURITY;
 
 -- Policy: Public có thể đọc posts published
@@ -88,6 +105,10 @@ CREATE POLICY "Public can read categories" ON categories
 
 -- Policy: Public có thể đọc products active
 CREATE POLICY "Public can read active products" ON products
+  FOR SELECT USING (status = 'active');
+
+-- Policy: Public có thể đọc projects active
+CREATE POLICY "Public can read active projects" ON projects
   FOR SELECT USING (status = 'active');
 
 -- Policy: Public có thể tạo contacts

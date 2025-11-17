@@ -48,6 +48,20 @@ export interface Product {
   updated_at: string;
 }
 
+export interface Project {
+  id: string;
+  name: string;
+  slug: string;
+  description?: string;
+  location?: string;
+  thumbnail?: string;
+  gallery?: string[];
+  status: 'active' | 'inactive';
+  completed_at?: string;
+  created_at: string;
+  updated_at: string;
+}
+
 export interface Contact {
   id: string;
   name: string;

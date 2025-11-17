@@ -83,6 +83,7 @@ const navItems = [
   { href: '/', label: 'Trang chủ' },
   { href: '/about', label: 'Giới thiệu' },
   { href: '/products', label: 'Sản phẩm' },
+  { href: '/projects', label: 'Dự án' },
   { href: '/blog', label: 'Tin tức' },
   { href: '/contact', label: 'Liên hệ' },
 ];
