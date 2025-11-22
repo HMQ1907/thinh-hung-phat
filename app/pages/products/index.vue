@@ -99,6 +99,7 @@ useHead({
 
 const { data: response, pending, error } = await useFetch<APIResponse<Product[]>>("/api/products", {
   query: { status: "active" },
+  default: () => ({ data: [], status: 200, success: true }),
 });
 
 const products = computed(() => response.value?.data || []);

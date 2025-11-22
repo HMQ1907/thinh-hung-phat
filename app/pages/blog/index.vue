@@ -103,10 +103,14 @@ useHead({
 });
 
 const { data: response, pending, error } = await useFetch<APIResponse<Post[]>>("/api/posts", {
-  query: { status: "published" },
+  default: () => ({ data: [], status: 200, success: true }),
 });
 
-const posts = computed(() => response.value?.data || []);
+const posts = computed(() => {
+  const data = response.value?.data || [];
+  console.log("[Blog] Posts loaded:", data.length, "posts");
+  return data;
+});
 
 const formatDate = (date: string) => {
   return new Date(date).toLocaleDateString("vi-VN", {

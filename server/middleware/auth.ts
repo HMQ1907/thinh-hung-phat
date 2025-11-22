@@ -1,3 +1,5 @@
+import { getCookie, defineEventHandler, createError } from 'h3';
+
 export default defineEventHandler(async (event) => {
   // Only protect admin routes
   if (!event.path.startsWith("/admin")) {

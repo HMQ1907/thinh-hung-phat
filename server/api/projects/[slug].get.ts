@@ -4,36 +4,43 @@ import { serverSupabaseServiceClient } from "../../utils/supabase";
 export default defineEventHandler(async (event) => {
   try {
     const supabase = serverSupabaseServiceClient();
-    const query = getQuery(event);
-    const limit = query.limit ? Number(query.limit) : 20;
+    const slug = getRouterParam(event, "slug");
+
+    if (!slug) {
+      throw createError({
+        statusCode: 400,
+        message: "Slug is required",
+      });
+    }
 
     const { data, error } = await supabase
       .from("projects")
       .select("*")
+      .eq("slug", slug)
       .eq("status", "active")
-      .order("completed_at", { ascending: false })
-      .order("created_at", { ascending: false })
-      .limit(limit);
+      .single();
 
     if (error) {
-      console.error("[API] Projects query error:", error);
+      if (error.code === "PGRST116") {
+        throw createError({
+          statusCode: 404,
+          message: "Project not found",
+        });
+      }
       throw error;
     }
-
-    console.log("[API] Projects fetched:", data?.length || 0, "projects");
 
     return {
       status: 200,
       success: true,
-      data: data as Project[],
+      data: data as Project,
     };
   } catch (error: any) {
-    console.error("[API] Error fetching projects:", error);
+    console.error("[API] Error in project detail endpoint:", error);
     throw createError({
       statusCode: error.statusCode || 500,
       message: error.message || "Internal server error",
     });
   }
 });
-
 

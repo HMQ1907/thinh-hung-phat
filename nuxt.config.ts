@@ -1,24 +1,39 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
+// @ts-ignore - Nuxt auto-injects types
 export default defineNuxtConfig({
   compatibilityDate: "2025-07-15",
   devtools: { enabled: true },
 
-  // Modules
-  modules: ["@nuxt/image", "@vueuse/motion/nuxt", "shadcn-nuxt"],
-
-  // shadcn-nuxt configuration
-  // @ts-ignore - shadcn-nuxt types
-  shadcn: {
-    prefix: "",
-    componentDir: "./app/components/ui",
+  // TypeScript configuration
+  typescript: {
+    typeCheck: false, // Disable type checking during build for faster dev
   },
+
+  // Modules
+  modules: ["@nuxt/image", "@vueuse/motion/nuxt"],
+
+  // Components auto-import
+  components: [
+    {
+      path: "~/components",
+      pathPrefix: false,
+    },
+    {
+      path: "~/components/ui",
+      prefix: "Ui",
+    },
+    {
+      path: "~/components/admin",
+      prefix: "Admin",
+    },
+  ],
 
   // CSS
   css: ["~/assets/css/main.css"],
 
   postcss: {
     plugins: {
-      '@tailwindcss/postcss': {},
+      "@tailwindcss/postcss": {},
       autoprefixer: {},
     },
   },
@@ -36,11 +51,14 @@ export default defineNuxtConfig({
       meta: [
         { charset: "utf-8" },
         { name: "viewport", content: "width=device-width, initial-scale=1" },
-        { name: "description", content: "Thịnh Hưng Phát - Chuyên cung cấp than đá chất lượng cao, uy tín, giá cả hợp lý" },
+        {
+          name: "description",
+          content:
+            "Thịnh Hưng Phát - Chuyên cung cấp than đá chất lượng cao, uy tín, giá cả hợp lý",
+        },
       ],
     },
   },
-
 
   nitro: {
     storage: {

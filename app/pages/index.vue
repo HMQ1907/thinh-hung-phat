@@ -2,7 +2,7 @@
   <div>
     <!-- Hero Section -->
     <section class="relative h-[600px] md:h-[700px] flex items-center justify-center bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white">
-      <div class="absolute inset-0 bg-black/40"></div>
+      <div class="absolute inset-0 bg-black/40 z-0"></div>
       <div class="container mx-auto px-4 relative z-10 text-center">
         <h1
           v-motion-fade
@@ -20,20 +20,33 @@
         <div
           v-motion-fade
           :delay="200"
-          class="flex flex-col sm:flex-row gap-4 justify-center"
+          class="flex flex-col sm:flex-row gap-4 justify-center relative z-20"
         >
-          <NuxtLink
+          <UiButton
             to="/products"
-            class="px-8 py-3 bg-primary text-primary-foreground rounded-lg font-semibold hover:bg-primary/90 transition-colors"
+            variant="primary"
+            size="lg"
           >
+            <template #icon>
+              <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.25 7.5l-.625 10.632a2.25 2.25 0 01-2.247 2.118H6.622a2.25 2.25 0 01-2.247-2.118L3.75 7.5M10 11.25h4M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125z" />
+              </svg>
+            </template>
             Xem sản phẩm
-          </NuxtLink>
-          <NuxtLink
+          </UiButton>
+          <UiButton
             to="/contact"
-            class="px-8 py-3 bg-white/10 text-white rounded-lg font-semibold hover:bg-white/20 transition-colors backdrop-blur"
+            variant="outline"
+            size="lg"
+            class="bg-white/10 border-white/20 text-white hover:bg-white/20 backdrop-blur"
           >
+            <template #icon>
+              <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
+              </svg>
+            </template>
             Liên hệ ngay
-          </NuxtLink>
+          </UiButton>
         </div>
       </div>
     </section>
@@ -88,15 +101,18 @@
             <p class="text-gray-600 mb-8 text-lg leading-relaxed">
               Chúng tôi cam kết mang đến cho khách hàng sản phẩm than đá tốt nhất với giá cả hợp lý và dịch vụ chuyên nghiệp, đáp ứng mọi nhu cầu của khách hàng.
             </p>
-            <NuxtLink
+            <UiButton
               to="/about"
-              class="inline-flex items-center space-x-2 px-8 py-4 bg-primary text-primary-foreground rounded-xl font-semibold hover:bg-primary/90 transition-all shadow-lg hover:shadow-xl"
+              variant="primary"
+              size="lg"
             >
-              <span>Tìm hiểu thêm</span>
-              <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-              </svg>
-            </NuxtLink>
+              <template #icon>
+                <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                </svg>
+              </template>
+              Tìm hiểu thêm
+            </UiButton>
           </div>
           <div
             v-motion-slide-visible-once-right
@@ -330,10 +346,15 @@ const products = computed(() => productsResponse.value?.data || []);
 
 // Fetch posts
 const { data: postsResponse, pending: postsPending } = await useFetch<APIResponse<Post[]>>("/api/posts", {
-  query: { limit: 3, status: "published" },
+  query: { limit: 3 },
+  default: () => ({ data: [], status: 200, success: true }),
 });
 
-const posts = computed(() => postsResponse.value?.data || []);
+const posts = computed(() => {
+  const data = postsResponse.value?.data || [];
+  console.log("[Home] Posts loaded:", data.length, "posts");
+  return data;
+});
 
 const formatDate = (date: string) => {
   return new Date(date).toLocaleDateString("vi-VN", {

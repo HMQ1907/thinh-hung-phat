@@ -2,30 +2,30 @@ import { serverSupabaseServiceClient } from "../../../utils/supabase";
 
 export default defineEventHandler(async (event) => {
   try {
-    const supabase = serverSupabaseServiceClient();
     const id = getRouterParam(event, "id");
 
     if (!id) {
       throw createError({
         statusCode: 400,
-        message: "ID is required",
+        message: "Product ID is required",
       });
     }
 
-    // Get post to find thumbnail path
-    const { data: post, error: fetchError } = await supabase
-      .from("posts")
-      .select("thumbnail")
+    const supabase = serverSupabaseServiceClient();
+    
+    // Get product to find image path
+    const { data: product, error: fetchError } = await supabase
+      .from("products")
+      .select("image_url")
       .eq("id", id)
       .single();
 
     if (fetchError) throw fetchError;
 
     // Delete image from storage if exists
-    if (post?.thumbnail) {
+    if (product?.image_url) {
       try {
-        // Extract path from URL (format: https://xxx.supabase.co/storage/v1/object/public/THP_Images/uploads/xxx.jpg)
-        const url = new URL(post.thumbnail);
+        const url = new URL(product.image_url);
         const pathParts = url.pathname.split('/');
         const thpImagesIndex = pathParts.findIndex(part => part === 'THP_Images');
         
@@ -40,22 +40,21 @@ export default defineEventHandler(async (event) => {
         }
       } catch (storageError) {
         console.warn("[API] Failed to delete image from storage:", storageError);
-        // Continue with deletion even if image removal fails
       }
     }
 
-    // Delete post from database
-    const { error } = await supabase.from("posts").delete().eq("id", id);
+    // Delete product from database
+    const { error } = await supabase.from("products").delete().eq("id", id);
 
     if (error) throw error;
 
     return {
       status: 200,
       success: true,
-      message: "Post deleted successfully",
+      message: "Product deleted successfully",
     };
   } catch (error: any) {
-    console.error("[API] Error deleting post:", error);
+    console.error("[API] Error deleting product:", error);
     throw createError({
       statusCode: error.statusCode || 500,
       message: error.message || "Internal server error",

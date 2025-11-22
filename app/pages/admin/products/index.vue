@@ -2,9 +2,9 @@
   <div class="space-y-8">
     <div class="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
       <div>
-        <p class="text-sm uppercase tracking-[0.4em] text-gray-400">Projects</p>
-        <h1 class="text-3xl font-bold text-gray-900">Quản lý dự án</h1>
-        <p class="text-sm text-gray-500">Thêm, chỉnh sửa hoặc xoá các dự án tiêu biểu hiển thị ngoài website.</p>
+        <p class="text-sm uppercase tracking-[0.4em] text-gray-400">Products</p>
+        <h1 class="text-3xl font-bold text-gray-900">Quản lý sản phẩm</h1>
+        <p class="text-sm text-gray-500">Thêm, chỉnh sửa hoặc xoá các sản phẩm than đá.</p>
       </div>
       <UiButton
         type="button"
@@ -20,20 +20,20 @@
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
           </svg>
         </template>
-        {{ showForm ? "Đóng form" : "Thêm dự án" }}
+        {{ showForm ? "Đóng form" : "Thêm sản phẩm" }}
       </UiButton>
     </div>
 
     <div v-if="showForm" class="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm">
       <form @submit.prevent="handleSubmit" class="grid gap-5 md:grid-cols-2">
         <div class="md:col-span-1">
-          <label class="mb-2 block text-sm font-semibold text-gray-700">Tên dự án *</label>
+          <label class="mb-2 block text-sm font-semibold text-gray-700">Tên sản phẩm *</label>
           <input
             v-model="form.name"
             type="text"
             required
             class="w-full rounded-xl border border-gray-200 px-4 py-3 focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
-            placeholder="Nhập tên dự án"
+            placeholder="Nhập tên sản phẩm"
           />
         </div>
 
@@ -45,24 +45,39 @@
             required
             @input="manualSlug = true"
             class="w-full rounded-xl border border-gray-200 px-4 py-3 focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
-            placeholder="ten-du-an"
+            placeholder="ten-san-pham"
           />
         </div>
 
+
         <div class="md:col-span-1">
-          <label class="mb-2 block text-sm font-semibold text-gray-700">Vị trí</label>
-          <input
-            v-model="form.location"
-            type="text"
+          <label class="mb-2 block text-sm font-semibold text-gray-700">Danh mục</label>
+          <select
+            v-model="form.category_id"
             class="w-full rounded-xl border border-gray-200 px-4 py-3 focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
-            placeholder="TP.HCM"
+          >
+            <option value="">Không có</option>
+            <option v-for="cat in categories" :key="cat.id" :value="cat.id">
+              {{ cat.name }}
+            </option>
+          </select>
+        </div>
+
+        <div class="md:col-span-1">
+          <label class="mb-2 block text-sm font-semibold text-gray-700">Giá (VNĐ)</label>
+          <input
+            v-model.number="form.price"
+            type="number"
+            min="0"
+            class="w-full rounded-xl border border-gray-200 px-4 py-3 focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
+            placeholder="0"
           />
         </div>
 
         <div class="md:col-span-2">
           <AdminImageUpload
-            v-model="form.thumbnail"
-            label="Thumbnail"
+            v-model="form.image_url"
+            label="Hình ảnh sản phẩm"
           />
         </div>
 
@@ -72,7 +87,7 @@
             v-model="form.description"
             rows="4"
             class="w-full rounded-xl border border-gray-200 px-4 py-3 focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
-            placeholder="Mô tả ngắn gọn về dự án"
+            placeholder="Mô tả về sản phẩm"
           />
         </div>
 
@@ -85,15 +100,6 @@
             <option value="active">Active</option>
             <option value="inactive">Inactive</option>
           </select>
-        </div>
-
-        <div class="md:col-span-1">
-          <label class="mb-2 block text-sm font-semibold text-gray-700">Ngày hoàn thành</label>
-          <input
-            v-model="form.completed_at"
-            type="date"
-            class="w-full rounded-xl border border-gray-200 px-4 py-3 focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
-          />
         </div>
 
         <div class="md:col-span-2 flex justify-end gap-3 pt-4 border-t border-gray-200">
@@ -112,7 +118,7 @@
             variant="primary"
             size="md"
           >
-            Lưu dự án
+            {{ editingId ? "Cập nhật" : "Lưu sản phẩm" }}
           </UiButton>
         </div>
       </form>
@@ -120,8 +126,8 @@
 
     <div class="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm">
       <div class="flex items-center justify-between">
-        <h2 class="text-xl font-semibold text-gray-900">Danh sách dự án</h2>
-        <p class="text-sm text-gray-500">{{ projects.length }} dự án</p>
+        <h2 class="text-xl font-semibold text-gray-900">Danh sách sản phẩm</h2>
+        <p class="text-sm text-gray-500">{{ products.length }} sản phẩm</p>
       </div>
 
       <div v-if="pending" class="mt-6 grid gap-4">
@@ -129,38 +135,40 @@
       </div>
 
       <div v-else-if="error" class="mt-6 rounded-xl border border-red-200 bg-red-50 p-4 text-red-700">
-        Không tải được dự án: {{ error }}
+        Không tải được sản phẩm: {{ error }}
       </div>
 
-      <div v-else-if="projects.length === 0" class="mt-6 rounded-xl border border-dashed border-gray-200 p-8 text-center text-gray-500">
-        Chưa có dự án nào.
+      <div v-else-if="products.length === 0" class="mt-6 rounded-xl border border-dashed border-gray-200 p-8 text-center text-gray-500">
+        Chưa có sản phẩm nào.
       </div>
 
       <div v-else class="mt-6 space-y-4">
         <div
-          v-for="project in projects"
-          :key="project.id"
+          v-for="product in products"
+          :key="product.id"
           class="flex flex-col gap-4 rounded-xl border border-gray-100 p-4 md:flex-row md:items-center md:justify-between"
         >
           <div class="flex items-center gap-4">
             <img
-              v-if="project.thumbnail"
-              :src="project.thumbnail"
-              :alt="project.name"
+              v-if="product.image_url"
+              :src="product.image_url"
+              :alt="product.name"
               class="h-16 w-16 rounded-xl object-cover"
             />
             <div v-else class="flex h-16 w-16 items-center justify-center rounded-xl bg-gray-100 text-lg font-semibold text-gray-600">
-              {{ project.name?.charAt(0) }}
+              {{ product.name?.charAt(0) }}
             </div>
             <div>
-              <p class="text-sm uppercase tracking-[0.3em] text-gray-400">{{ project.status }}</p>
-              <h3 class="text-lg font-semibold text-gray-900">{{ project.name }}</h3>
-              <p class="text-sm text-gray-500">{{ project.location || "Không rõ vị trí" }}</p>
+              <h3 class="text-lg font-semibold text-gray-900">{{ product.name }}</h3>
+              <p class="text-sm text-gray-500">{{ product.slug }}</p>
+              <p v-if="product.price" class="text-sm font-semibold text-primary">
+                {{ formatPrice(product.price) }}
+              </p>
             </div>
           </div>
           <div class="flex gap-2">
             <UiButton
-              :to="`/admin/projects/${project.id}/edit`"
+              @click="handleEdit(product)"
               variant="outline"
               size="sm"
             >
@@ -172,7 +180,7 @@
               Sửa
             </UiButton>
             <UiButton
-              @click="handleDelete(project.id)"
+              @click="handleDelete(product.id)"
               variant="danger"
               size="sm"
             >
@@ -205,7 +213,7 @@
 
 <script setup lang="ts">
 import { generateSlug } from "~/utils/constants";
-import type { Project, APIResponse } from "~/types";
+import type { Product, Category, APIResponse } from "~/types";
 
 definePageMeta({
   layout: "admin",
@@ -213,11 +221,12 @@ definePageMeta({
 });
 
 useHead({
-  title: "Quản lý dự án - Admin",
+  title: "Quản lý sản phẩm - Admin",
 });
 
 const showForm = ref(false);
 const submitting = ref(false);
+const editingId = ref<string | null>(null);
 const confirmDialog = useConfirm();
 const toast = useToast();
 
@@ -225,10 +234,10 @@ const form = reactive({
   name: "",
   slug: "",
   description: "",
-  location: "",
-  thumbnail: "",
-  status: "active",
-  completed_at: "",
+  price: null as number | null,
+  image_url: "",
+  category_id: "",
+  status: "active" as "active" | "inactive",
 });
 
 watch(
@@ -242,23 +251,49 @@ watch(
 
 const manualSlug = ref(false);
 
-const { data: response, pending, error, refresh } = useFetch<APIResponse<Project[]>>("/api/admin/projects");
+const { data: response, pending, error, refresh } = useFetch<APIResponse<Product[]>>("/api/admin/products");
+const { data: categoriesResponse } = await useFetch<APIResponse<Category[]>>("/api/admin/categories");
 
-const projects = computed(() => response.value?.data || []);
+const products = computed(() => response.value?.data || []);
+const categories = computed(() => categoriesResponse.value?.data || []);
+
+const formatPrice = (price: number) => {
+  return new Intl.NumberFormat("vi-VN", {
+    style: "currency",
+    currency: "VND",
+  }).format(price);
+};
 
 const toggleForm = () => {
   showForm.value = !showForm.value;
+  if (!showForm.value) {
+    resetForm();
+  }
 };
 
 const resetForm = () => {
   form.name = "";
   form.slug = "";
   form.description = "";
-  form.location = "";
-  form.thumbnail = "";
+  form.price = null;
+  form.image_url = "";
+  form.category_id = "";
   form.status = "active";
-  form.completed_at = "";
   manualSlug.value = false;
+  editingId.value = null;
+};
+
+const handleEdit = (product: Product) => {
+  editingId.value = product.id;
+  form.name = product.name;
+  form.slug = product.slug;
+  form.description = product.description || "";
+  form.price = product.price || null;
+  form.image_url = product.image_url || "";
+  form.category_id = product.category_id || "";
+  form.status = product.status;
+  manualSlug.value = true;
+  showForm.value = true;
 };
 
 const handleSubmit = async () => {
@@ -266,20 +301,37 @@ const handleSubmit = async () => {
   submitting.value = true;
 
   try {
-    await $fetch("/api/admin/projects", {
-      method: "POST",
-      body: {
-        ...form,
-        completed_at: form.completed_at || null,
-      },
-    });
+    if (editingId.value) {
+      await $fetch(`/api/admin/products/${editingId.value}`, {
+        method: "PUT",
+        body: {
+          ...form,
+          description: form.description || null,
+          price: form.price || null,
+          image_url: form.image_url || null,
+          category_id: form.category_id || null,
+        },
+      });
+      toast.success('Đã cập nhật sản phẩm thành công');
+    } else {
+      await $fetch("/api/admin/products", {
+        method: "POST",
+        body: {
+          ...form,
+          description: form.description || null,
+          price: form.price || null,
+          image_url: form.image_url || null,
+          category_id: form.category_id || null,
+        },
+      });
+      toast.success('Đã tạo sản phẩm thành công');
+    }
 
     resetForm();
     showForm.value = false;
-    toast.success('Đã tạo dự án thành công');
     await refresh();
   } catch (err: any) {
-    console.error("Create project error:", err);
+    console.error("Save product error:", err);
     toast.error('Có lỗi xảy ra: ' + (err.message || 'Không xác định'));
   } finally {
     submitting.value = false;
@@ -288,8 +340,8 @@ const handleSubmit = async () => {
 
 const handleDelete = async (id: string) => {
   const confirmed = await confirmDialog.confirm({
-    title: 'Xoá dự án',
-    message: 'Bạn có chắc muốn xoá dự án này? Hành động này không thể hoàn tác.',
+    title: 'Xoá sản phẩm',
+    message: 'Bạn có chắc muốn xoá sản phẩm này? Hành động này không thể hoàn tác.',
     confirmText: 'Xoá',
     cancelText: 'Hủy',
     variant: 'danger',
@@ -298,16 +350,15 @@ const handleDelete = async (id: string) => {
   if (!confirmed) return;
 
   try {
-    await $fetch(`/api/admin/projects/${id}`, {
+    await $fetch(`/api/admin/products/${id}`, {
       method: "DELETE",
     });
-    toast.success('Đã xoá dự án thành công');
+    toast.success('Đã xoá sản phẩm thành công');
     await refresh();
   } catch (err: any) {
-    console.error("Delete project error:", err);
+    console.error("Delete product error:", err);
     toast.error('Có lỗi xảy ra: ' + (err.message || 'Không xác định'));
   }
 };
 </script>
-
 

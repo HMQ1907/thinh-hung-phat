@@ -78,20 +78,22 @@
                   placeholder="Nhập tin nhắn của bạn"
                 ></textarea>
               </div>
-              <button
+              <UiButton
                 type="submit"
                 :disabled="submitting"
-                class="w-full px-6 py-4 bg-primary text-primary-foreground rounded-xl font-semibold hover:bg-primary/90 transition-all shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center space-x-2"
+                :loading="submitting"
+                loading-text="Đang gửi..."
+                variant="primary"
+                size="lg"
+                full-width
               >
-                <span v-if="submitting" class="flex items-center space-x-2">
-                  <svg class="animate-spin h-5 w-5" fill="none" viewBox="0 0 24 24">
-                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                <template #icon>
+                  <svg v-if="!submitting" class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
                   </svg>
-                  <span>Đang gửi...</span>
-                </span>
-                <span v-else>Gửi tin nhắn</span>
-              </button>
+                </template>
+                Gửi tin nhắn
+              </UiButton>
               <div v-if="submitSuccess" class="p-4 bg-green-50 border border-green-200 text-green-800 rounded-xl">
                 <div class="flex items-center space-x-2">
                   <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">

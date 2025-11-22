@@ -5,10 +5,13 @@
       <slot />
     </main>
     <AppFooter />
+    
+    <ClientOnly>
+      <Toaster position="top-right" />
+    </ClientOnly>
   </div>
 </template>
 
 <script setup lang="ts">
-// Layout mặc định cho website
 </script>
 

@@ -36,9 +36,10 @@
         </div>
 
         <div v-else class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-          <article
+          <NuxtLink
             v-for="project in projects"
             :key="project.id"
+            :to="`/projects/${project.slug}`"
             class="group flex flex-col overflow-hidden rounded-3xl border border-gray-100 bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-xl"
           >
             <div class="relative h-56 w-full overflow-hidden">
@@ -68,10 +69,15 @@
               </div>
               <div class="mt-auto flex items-center justify-between text-sm text-gray-500">
                 <span>{{ formatDate(project.completed_at || project.created_at) }}</span>
-                <span class="font-medium text-primary">Xem chi tiết</span>
+                <span class="font-medium text-primary group-hover:gap-2 transition-all inline-flex items-center">
+                  Xem chi tiết
+                  <svg class="h-4 w-4 ml-1 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                  </svg>
+                </span>
               </div>
             </div>
-          </article>
+          </NuxtLink>
         </div>
       </div>
     </section>
@@ -79,7 +85,7 @@
 </template>
 
 <script setup lang="ts">
-import type { Project } from "~/types";
+import type { Project, APIResponse } from "~/types";
 
 useHead({
   title: "Dự án tiêu biểu - Thịnh Hưng Phát",
@@ -91,11 +97,11 @@ useHead({
   ],
 });
 
-const { data, error, pending } = useFetch<Project[]>("/api/projects", {
-  default: () => [],
+const { data: response, error, pending } = useFetch<APIResponse<Project[]>>("/api/projects", {
+  default: () => ({ data: [], status: 200, success: true }),
 });
 
-const projects = computed<Project[]>(() => data.value || []);
+const projects = computed<Project[]>(() => response.value?.data || []);
 
 const formatDate = (value?: string) => {
   if (!value) return "Đang triển khai";

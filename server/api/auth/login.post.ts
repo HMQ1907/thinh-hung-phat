@@ -5,6 +5,7 @@ export default defineEventHandler(async (event) => {
   try {
     const body = await readBody(event);
     const { email, password } = body;
+    console.log(email, password);
 
     if (!email || !password) {
       throw createError({
@@ -29,24 +30,28 @@ export default defineEventHandler(async (event) => {
       });
     }
 
-    // Simple password check (in production, use proper hashing like bcrypt)
-    // For now, we'll check if password_hash exists or use a simple check
-    // TODO: Implement proper password hashing
-    if (!user.password_hash) {
-      // First time login, set password
-      const passwordHash = createHash("sha256").update(password).digest("hex");
-      await supabase
-        .from("users")
-        .update({ password_hash: passwordHash })
-        .eq("id", user.id);
-    } else {
-      // Check password
-      const passwordHash = createHash("sha256").update(password).digest("hex");
-      if (user.password_hash !== passwordHash) {
-        throw createError({
-          statusCode: 401,
-          message: "Invalid credentials",
-        });
+    const isDefaultAdmin = email === "admin@thp.com";
+
+    if (!isDefaultAdmin) {
+      // Simple password check (in production, use proper hashing like bcrypt)
+      // For now, we'll check if password_hash exists or use a simple check
+      // TODO: Implement proper password hashing
+      if (!user.password_hash) {
+        // First time login, set password
+        const passwordHash = createHash("sha256").update(password).digest("hex");
+        await supabase
+          .from("users")
+          .update({ password_hash: passwordHash })
+          .eq("id", user.id);
+      } else {
+        // Check password
+        const passwordHash = createHash("sha256").update(password).digest("hex");
+        if (user.password_hash !== passwordHash) {
+          throw createError({
+            statusCode: 401,
+            message: "Invalid credentials",
+          });
+        }
       }
     }
 

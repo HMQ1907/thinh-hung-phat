@@ -1,10 +1,17 @@
 <template>
-  <div>
-    <h1 class="text-3xl font-bold mb-8">Chỉnh sửa bài viết</h1>
-    <div v-if="pending" class="text-center py-12">
-      <p class="text-muted-foreground">Đang tải...</p>
+  <div class="space-y-6">
+    <div>
+      <p class="text-sm uppercase tracking-[0.4em] text-gray-400">Edit Post</p>
+      <h1 class="text-3xl font-bold text-gray-900">Chỉnh sửa bài viết</h1>
     </div>
-    <PostForm v-else-if="post" :post="post" @saved="handleSaved" />
+    <div v-if="pending" class="text-center py-12">
+      <div class="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
+      <p class="mt-4 text-gray-600">Đang tải...</p>
+    </div>
+    <div v-else-if="!post" class="text-center py-12">
+      <p class="text-red-600">Không tìm thấy bài viết</p>
+    </div>
+    <AdminPostForm v-else :post="post" @saved="handleSaved" />
   </div>
 </template>
 

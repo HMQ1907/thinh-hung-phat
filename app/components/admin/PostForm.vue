@@ -1,71 +1,67 @@
 <template>
-  <form @submit.prevent="handleSubmit" class="bg-white rounded-lg border shadow-sm p-6 space-y-6">
+  <form @submit.prevent="handleSubmit" class="bg-white rounded-2xl border border-gray-200 shadow-sm p-8 space-y-6">
     <div>
-      <label for="title" class="block text-sm font-medium mb-2">Tiêu đề *</label>
+      <label for="title" class="block text-sm font-semibold text-gray-700 mb-2">Tiêu đề *</label>
       <input
         id="title"
         v-model="form.title"
         type="text"
         required
-        class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+        class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary transition"
         placeholder="Nhập tiêu đề bài viết"
       />
     </div>
 
     <div>
-      <label for="slug" class="block text-sm font-medium mb-2">Slug *</label>
+      <label for="slug" class="block text-sm font-semibold text-gray-700 mb-2">Slug *</label>
       <input
         id="slug"
         v-model="form.slug"
         type="text"
         required
-        class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+        class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary transition"
         placeholder="bai-viet-moi"
       />
-      <p class="text-xs text-muted-foreground mt-1">URL-friendly version of title</p>
+      <p class="text-xs text-gray-500 mt-1">URL-friendly version of title</p>
     </div>
 
     <div>
-      <label for="excerpt" class="block text-sm font-medium mb-2">Mô tả ngắn</label>
+      <label for="excerpt" class="block text-sm font-semibold text-gray-700 mb-2">Mô tả ngắn</label>
       <textarea
         id="excerpt"
         v-model="form.excerpt"
         rows="3"
-        class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+        class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary transition resize-none"
         placeholder="Mô tả ngắn về bài viết"
       ></textarea>
     </div>
 
     <div>
-      <label for="content" class="block text-sm font-medium mb-2">Nội dung *</label>
+      <label for="content" class="block text-sm font-semibold text-gray-700 mb-2">Nội dung *</label>
       <textarea
         id="content"
         v-model="form.content"
-        rows="10"
+        rows="12"
         required
-        class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary font-mono"
+        class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary transition resize-none font-sans"
         placeholder="Nhập nội dung bài viết"
       ></textarea>
     </div>
 
     <div>
-      <label for="thumbnail" class="block text-sm font-medium mb-2">Hình ảnh</label>
-      <input
-        id="thumbnail"
+      <AdminImageUpload
         v-model="form.thumbnail"
-        type="url"
-        class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
-        placeholder="https://example.com/image.jpg"
+        label="Hình ảnh thumbnail"
       />
     </div>
 
-    <div class="grid grid-cols-2 gap-4">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
       <div>
-        <label for="status" class="block text-sm font-medium mb-2">Trạng thái</label>
+        <label for="status" class="block text-sm font-semibold text-gray-700 mb-2">Trạng thái</label>
         <select
           id="status"
           v-model="form.status"
-          class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+          class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary transition"
         >
           <option value="draft">Nháp</option>
           <option value="published">Đã xuất bản</option>
@@ -74,11 +70,11 @@
       </div>
 
       <div>
-        <label for="category" class="block text-sm font-medium mb-2">Danh mục</label>
+        <label for="category" class="block text-sm font-semibold text-gray-700 mb-2">Danh mục</label>
         <select
           id="category"
           v-model="form.category_id"
-          class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+          class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary transition"
         >
           <option value="">Không có</option>
           <option v-for="cat in categories" :key="cat.id" :value="cat.id">
@@ -88,34 +84,42 @@
       </div>
     </div>
 
-    <div class="flex items-center space-x-2">
+    <div class="flex items-center space-x-3 p-4 bg-gray-50 rounded-xl border border-gray-200">
       <input
         id="featured"
         v-model="form.featured"
         type="checkbox"
-        class="h-4 w-4 rounded border-gray-300"
+        class="h-5 w-5 rounded border-gray-300 text-primary focus:ring-primary"
       />
-      <label for="featured" class="text-sm font-medium">Bài viết nổi bật</label>
+      <label for="featured" class="text-sm font-semibold text-gray-700 cursor-pointer">Bài viết nổi bật</label>
     </div>
 
-    <div class="flex justify-end space-x-4">
-      <NuxtLink
+    <div class="flex justify-end gap-3 pt-4 border-t border-gray-200">
+      <UiButton
         to="/admin/posts"
-        class="px-6 py-2 border rounded-lg font-semibold hover:bg-gray-50 transition-colors"
+        variant="outline"
+        size="md"
       >
         Hủy
-      </NuxtLink>
-      <button
+      </UiButton>
+      <UiButton
         type="submit"
         :disabled="submitting"
-        class="px-6 py-2 bg-primary text-primary-foreground rounded-lg font-semibold hover:bg-primary/90 transition-colors disabled:opacity-50"
+        :loading="submitting"
+        variant="primary"
+        size="md"
       >
-        {{ submitting ? "Đang lưu..." : "Lưu bài viết" }}
-      </button>
+        {{ props.post ? "Cập nhật bài viết" : "Lưu bài viết" }}
+      </UiButton>
     </div>
 
-    <div v-if="error" class="p-4 bg-red-50 text-red-800 rounded-lg">
-      {{ error }}
+    <div v-if="error" class="p-4 bg-red-50 border border-red-200 text-red-800 rounded-xl">
+      <div class="flex items-center gap-2">
+        <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+        <span class="font-semibold">{{ error }}</span>
+      </div>
     </div>
   </form>
 </template>

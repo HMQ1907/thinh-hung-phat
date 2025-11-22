@@ -1,9 +1,11 @@
-import type { Project } from "~/types";
+import type { Project, APIResponse } from "~/types";
 import { serverSupabaseServiceClient } from "../../../utils/supabase";
 
 export default defineEventHandler(async (event) => {
   try {
+    const supabase = serverSupabaseServiceClient();
     const id = getRouterParam(event, "id");
+
     if (!id) {
       throw createError({
         statusCode: 400,
@@ -11,39 +13,33 @@ export default defineEventHandler(async (event) => {
       });
     }
 
-    const body = await readBody(event);
-    const supabase = serverSupabaseServiceClient();
-
     const { data, error } = await supabase
       .from("projects")
-      .update({
-        name: body.name,
-        slug: body.slug,
-        description: body.description,
-        location: body.location,
-        thumbnail: body.thumbnail,
-        gallery: body.gallery,
-        status: body.status,
-        completed_at: body.completed_at || null,
-      })
+      .select("*")
       .eq("id", id)
-      .select()
       .single();
 
-    if (error) throw error;
+    if (error) {
+      if (error.code === "PGRST116") {
+        throw createError({
+          statusCode: 404,
+          message: "Project not found",
+        });
+      }
+      throw error;
+    }
 
     return {
       status: 200,
       success: true,
       data: data as Project,
-    };
+    } as APIResponse<Project>;
   } catch (error: any) {
-    console.error("[API] Error updating project:", error);
+    console.error("[API] Error in project detail endpoint:", error);
     throw createError({
       statusCode: error.statusCode || 500,
       message: error.message || "Internal server error",
     });
   }
 });
-
 

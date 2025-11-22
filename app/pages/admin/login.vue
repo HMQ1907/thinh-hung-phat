@@ -72,20 +72,17 @@
             {{ error }}
           </div>
 
-          <button
+          <UiButton
             type="submit"
             :disabled="loading"
-            class="flex w-full items-center justify-center rounded-xl bg-slate-900 py-3 text-sm font-semibold text-white transition hover:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-slate-900/40 disabled:cursor-not-allowed disabled:opacity-60"
+            :loading="loading"
+            loading-text="Đang đăng nhập"
+            variant="primary"
+            size="lg"
+            full-width
           >
-            <span v-if="loading" class="flex items-center space-x-2">
-              <svg class="h-5 w-5 animate-spin" fill="none" viewBox="0 0 24 24">
-                <circle class="opacity-20" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                <path class="opacity-70" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.372 0 0 5.372 0 12h4z"></path>
-              </svg>
-              <span>Đang đăng nhập</span>
-            </span>
-            <span v-else>Đăng nhập</span>
-          </button>
+            Đăng nhập
+          </UiButton>
 
           <div class="text-center text-sm text-slate-500">
             <NuxtLink to="/" class="font-medium text-primary transition hover:text-primary/80">

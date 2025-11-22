@@ -43,6 +43,7 @@ export interface Product {
   specifications?: Record<string, any>;
   price?: number;
   image_url?: string;
+  category_id?: string;
   status: 'active' | 'inactive';
   created_at: string;
   updated_at: string;

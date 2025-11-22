@@ -1,4 +1,4 @@
-import type { Project } from "~/types";
+import type { Project, APIResponse } from "~/types";
 import { serverSupabaseServiceClient } from "../../../utils/supabase";
 
 export default defineEventHandler(async () => {
@@ -15,7 +15,7 @@ export default defineEventHandler(async () => {
       status: 200,
       success: true,
       data: data as Project[],
-    };
+    } as APIResponse<Project[]>;
   } catch (error: any) {
     console.error("[API] Error listing projects:", error);
     throw createError({

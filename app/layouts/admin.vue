@@ -59,16 +59,46 @@
               </svg>
               <span class="font-medium">Bài viết</span>
             </NuxtLink>
-                  <NuxtLink
-                    to="/admin/projects"
-                    class="flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-gray-100 transition-all group"
-                    active-class="bg-primary text-primary-foreground shadow-md"
-                  >
-                    <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
-                      <path stroke-linecap="round" stroke-linejoin="round" d="M9.75 21h4.5m-7.5 0h10.5m-14.25-7.5h18M3.75 21a.75.75 0 01-.75-.75V6.75A1.5 1.5 0 014.5 5.25h15a1.5 1.5 0 011.5 1.5v13.5a.75.75 0 01-.75.75M7.5 9.75h.008v.008H7.5v-.008zM7.5 12.75h.008v.008H7.5v-.008zM7.5 15.75h.008v.008H7.5v-.008zM12 9.75h4.5m-4.5 3h4.5m-4.5 3h2.25" />
-                    </svg>
-                    <span class="font-medium">Dự án</span>
-                  </NuxtLink>
+            <NuxtLink
+              to="/admin/projects"
+              class="flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-gray-100 transition-all group"
+              active-class="bg-primary text-primary-foreground shadow-md"
+            >
+              <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9.75 21h4.5m-7.5 0h10.5m-14.25-7.5h18M3.75 21a.75.75 0 01-.75-.75V6.75A1.5 1.5 0 014.5 5.25h15a1.5 1.5 0 011.5 1.5v13.5a.75.75 0 01-.75.75M7.5 9.75h.008v.008H7.5v-.008zM7.5 12.75h.008v.008H7.5v-.008zM7.5 15.75h.008v.008H7.5v-.008zM12 9.75h4.5m-4.5 3h4.5m-4.5 3h2.25" />
+              </svg>
+              <span class="font-medium">Dự án</span>
+            </NuxtLink>
+            <NuxtLink
+              to="/admin/categories"
+              class="flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-gray-100 transition-all group"
+              active-class="bg-primary text-primary-foreground shadow-md"
+            >
+              <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6zM3.75 15.75A2.25 2.25 0 016 13.5h2.25a2.25 2.25 0 012.25 2.25V18a2.25 2.25 0 01-2.25 2.25H6A2.25 2.25 0 013.75 18v-2.25zM13.5 6a2.25 2.25 0 012.25-2.25H18A2.25 2.25 0 0120.25 6v2.25A2.25 2.25 0 0118 10.5h-2.25a2.25 2.25 0 01-2.25-2.25V6zM13.5 15.75a2.25 2.25 0 012.25-2.25H18a2.25 2.25 0 012.25 2.25V18A2.25 2.25 0 0118 20.25h-2.25A2.25 2.25 0 0113.5 18v-2.25z" />
+              </svg>
+              <span class="font-medium">Danh mục</span>
+            </NuxtLink>
+            <NuxtLink
+              to="/admin/products"
+              class="flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-gray-100 transition-all group"
+              active-class="bg-primary text-primary-foreground shadow-md"
+            >
+              <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M20.25 7.5l-.625 10.632a2.25 2.25 0 01-2.247 2.118H6.622a2.25 2.25 0 01-2.247-2.118L3.75 7.5M10 11.25h4M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125z" />
+              </svg>
+              <span class="font-medium">Sản phẩm</span>
+            </NuxtLink>
+            <NuxtLink
+              to="/admin/contacts"
+              class="flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-gray-100 transition-all group"
+              active-class="bg-primary text-primary-foreground shadow-md"
+            >
+              <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
+              </svg>
+              <span class="font-medium">Liên hệ</span>
+            </NuxtLink>
             <NuxtLink
               to="/admin/users"
               class="flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-gray-100 transition-all group"
@@ -79,17 +109,6 @@
               </svg>
               <span class="font-medium">Người dùng</span>
             </NuxtLink>
-                  <NuxtLink
-                    to="/admin/projects"
-                    class="flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-gray-100 transition-all group"
-                    active-class="bg-primary text-primary-foreground shadow-md"
-                  >
-                    <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
-                      <path stroke-linecap="round" stroke-linejoin="round" d="M9.75 17L9 20 6 20 6 4 18 4 18 20 15 20 14.25 17z" />
-                      <path stroke-linecap="round" stroke-linejoin="round" d="M9 8h6m-6 4h6" />
-                    </svg>
-                    <span class="font-medium">Dự án</span>
-                  </NuxtLink>
           </nav>
 
           <div class="mt-8 pt-6 border-t border-gray-200">
@@ -125,6 +144,10 @@
         </div>
       </main>
     </div>
+    
+    <ClientOnly>
+      <Toaster position="top-right" />
+    </ClientOnly>
   </div>
 </template>
 
