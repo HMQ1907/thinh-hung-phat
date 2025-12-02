@@ -3,8 +3,7 @@
     <!-- Hero Section -->
       <section class="relative h-[500px] flex items-center justify-center bg-linear-to-br from-gray-900 via-gray-800 to-gray-900 text-white overflow-hidden">
       <div
-        class="absolute inset-0 opacity-20"
-        style="background-image: url('data:image/svg+xml,%3Csvg width=&quot;60&quot; height=&quot;60&quot; viewBox=&quot;0 0 60 60&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot;%3E%3Cg fill=&quot;none&quot; fill-rule=&quot;evenodd&quot;%3E%3Cg fill=&quot;%23ffffff&quot; fill-opacity=&quot;0.05&quot;%3E%3Cpath d=&quot;M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z&quot;/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')"
+        class="absolute inset-0 opacity-20 bg-gradient-to-br from-white/10 to-transparent"
       ></div>
       <div class="absolute inset-0 bg-black/40"></div>
       <div class="container mx-auto px-4 relative z-10 text-center">
@@ -126,7 +125,7 @@
                 </div>
                 <div>
                   <h3 class="font-semibold mb-1 text-lg">Địa chỉ</h3>
-                  <p class="text-muted-foreground">123 Đường ABC, Quận XYZ, TP.HCM</p>
+                  <p class="text-muted-foreground">256/22A đường Thạnh Xuân 25, Khu phố 2, Phường Thới An, TP Hồ Chí Minh, Việt Nam</p>
                 </div>
               </div>
                      <div class="flex items-start space-x-4">
@@ -137,7 +136,7 @@
                 </div>
                 <div>
                   <h3 class="font-semibold mb-1 text-lg">Điện thoại</h3>
-                  <p class="text-muted-foreground">0123 456 789</p>
+                  <p class="text-muted-foreground">0933 888 575</p>
                 </div>
               </div>
                      <div class="flex items-start space-x-4">
@@ -173,9 +172,9 @@
 
 <script setup lang="ts">
 useHead({
-  title: "Liên hệ - Thịnh Hưng Phát",
+  title: "Liên hệ - Thành Hưng Phát",
   meta: [
-    { name: "description", content: "Liên hệ với Thịnh Hưng Phát để được tư vấn về sản phẩm than đá" },
+    { name: "description", content: "Liên hệ với Thành Hưng Phát để được tư vấn về sản phẩm than đá" },
   ],
 });
 

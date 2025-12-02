@@ -8,7 +8,7 @@
             <div class="h-12 w-12 rounded-xl bg-gradient-to-br from-primary to-primary/80 flex items-center justify-center shadow-lg">
               <span class="text-primary-foreground font-bold text-xl">THP</span>
             </div>
-            <span class="font-bold text-xl text-gray-900">Thịnh Hưng Phát</span>
+            <span class="font-bold text-xl text-gray-900">Thành Hưng Phát</span>
           </div>
           <p class="text-sm text-gray-600 leading-relaxed">
             Chuyên cung cấp than đá chất lượng cao, uy tín, giá cả hợp lý. Cam kết mang đến sản phẩm tốt nhất cho khách hàng.
@@ -85,7 +85,7 @@
               </div>
               <div>
                 <p class="text-gray-500 text-xs mb-1">Điện thoại</p>
-                <a href="tel:0123456789" class="text-gray-700 hover:text-primary font-medium transition-colors">0123 456 789</a>
+                <a href="tel:0123456789" class="text-gray-700 hover:text-primary font-medium transition-colors">0933 888 575</a>
               </div>
             </li>
           </ul>
@@ -119,7 +119,7 @@
 
       <div class="mt-12 pt-8 border-t border-gray-200 text-center">
         <p class="text-sm text-gray-500">
-          &copy; {{ new Date().getFullYear() }} <span class="font-semibold text-gray-700">Thịnh Hưng Phát</span>. Tất cả quyền được bảo lưu.
+          &copy; {{ new Date().getFullYear() }} <span class="font-semibold text-gray-700">Thành Hưng Phát</span>. Tất cả quyền được bảo lưu.
         </p>
       </div>
     </div>

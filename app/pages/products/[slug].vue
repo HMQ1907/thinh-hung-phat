@@ -83,7 +83,7 @@ const { data: response, pending, error } = await useFetch<APIResponse<Product>>(
 const product = computed(() => response.value?.data);
 
 useHead({
-  title: product.value ? `${product.value.name} - Thịnh Hưng Phát` : "Sản phẩm",
+  title: product.value ? `${product.value.name} - Thành Hưng Phát` : "Sản phẩm",
   meta: [
     {
       name: "description",

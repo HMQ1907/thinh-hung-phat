@@ -1,26 +1,34 @@
 <template>
-  <header :class="['sticky top-0 z-50 w-full transition-all duration-300', isOverHero ? 'bg-transparent text-white border-transparent' : 'bg-white/95 backdrop-blur-md text-gray-900 border-b border-gray-200 shadow-sm']">
-    <nav class="container mx-auto flex h-16 md:h-20 items-center justify-between px-4 md:px-6">
+  <header
+    :class="[
+      'sticky top-0 z-50 w-full transition-all duration-300',
+      'bg-white/95 backdrop-blur-md text-gray-900 border-b border-gray-200 shadow-sm',
+    ]"
+  >
+    <nav
+      class="container mx-auto flex h-16 md:h-20 items-center justify-between px-4 md:px-6"
+    >
       <!-- Logo -->
       <NuxtLink to="/" class="flex items-center space-x-3 group">
-        <div class="h-10 w-10 md:h-12 md:w-12 rounded-xl bg-gradient-to-br from-primary to-primary/80 flex items-center justify-center shadow-lg group-hover:shadow-xl transition-all duration-300 group-hover:scale-105">
-          <span class="text-primary-foreground font-bold text-lg md:text-xl">THP</span>
-        </div>
-        <span class="font-bold text-lg md:text-xl hidden sm:inline-block group-hover:text-primary transition-colors">Thịnh Hưng Phát</span>
+        <img
+          src="/logo-thp-removebg.png"
+          alt="Thành Hưng Phát"
+          class="h-36 w-auto object-contain transition-all duration-300 group-hover:scale-105"
+        />
       </NuxtLink>
 
       <!-- Desktop Navigation -->
-      <div class="hidden md:flex items-center space-x-1">
+      <div class="hidden md:flex items-center space-x-6">
         <NuxtLink
           v-for="item in navItems"
           :key="item.href"
           :to="item.href"
           :class="[
-            isOverHero ? 'text-white/90 hover:text-white' : 'text-gray-700 hover:text-gray-900',
-            'px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-200',
-            'hover:bg-white/10'
+            'text-sm transition-colors duration-200 border-b-2 border-transparent pb-0.5',
+            route.path === item.href
+              ? 'text-primary border-primary font-bold'
+              : 'text-gray-700 hover:text-gray-900 font-medium',
           ]"
-          active-class="bg-primary text-primary-foreground shadow-md"
         >
           {{ item.label }}
         </NuxtLink>
@@ -79,32 +87,31 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, onBeforeUnmount } from 'vue';
+import { onMounted, onBeforeUnmount } from "vue";
 
 const mobileMenuOpen = ref(false);
-const isOverHero = ref(true); // Start with true, assuming we're at top
+const route = useRoute();
+const isOverHero = ref(true);
 let heroObserver: IntersectionObserver | null = null;
 
 const navItems = [
-  { href: '/', label: 'Trang chủ' },
-  { href: '/about', label: 'Giới thiệu' },
-  { href: '/products', label: 'Sản phẩm' },
-  { href: '/projects', label: 'Dự án' },
-  { href: '/blog', label: 'Tin tức' },
-  { href: '/contact', label: 'Liên hệ' },
+  { href: "/", label: "Trang chủ" },
+  { href: "/about", label: "Giới thiệu" },
+  { href: "/products", label: "Sản phẩm" },
+  { href: "/projects", label: "Dự án" },
+  { href: "/blog", label: "Tin tức" },
+  { href: "/contact", label: "Liên hệ" },
 ];
 
 onMounted(() => {
   if (!process.client) return;
 
-  // Try to observe the first big <section> (hero/banner) on the page.
-  const heroEl = document.querySelector('section');
+  const heroEl = document.querySelector("section");
 
-  if (heroEl && 'IntersectionObserver' in window) {
+  if (heroEl && "IntersectionObserver" in window) {
     heroObserver = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          // When hero is intersecting, we consider header over the banner
           isOverHero.value = entry.isIntersecting;
         });
       },
@@ -112,15 +119,13 @@ onMounted(() => {
     );
     heroObserver.observe(heroEl);
   } else {
-    // Fallback: simple scroll check
     const onScroll = () => {
       isOverHero.value = window.scrollY < 120;
     };
-    window.addEventListener('scroll', onScroll);
-    // run once to set initial state
+    window.addEventListener("scroll", onScroll);
     onScroll();
 
-    onBeforeUnmount(() => window.removeEventListener('scroll', onScroll));
+    onBeforeUnmount(() => window.removeEventListener("scroll", onScroll));
   }
 });
 
@@ -131,4 +136,3 @@ onBeforeUnmount(() => {
   }
 });
 </script>
-

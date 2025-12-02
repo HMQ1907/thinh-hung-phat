@@ -17,7 +17,7 @@
             </div>
             <div>
               <span class="font-bold text-lg block">Admin Panel</span>
-              <span class="text-xs text-gray-500">Thịnh Hưng Phát</span>
+              <span class="text-xs text-gray-500">Thành Hưng Phát</span>
             </div>
           </NuxtLink>
 

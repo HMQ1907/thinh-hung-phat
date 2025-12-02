@@ -14,7 +14,10 @@ export default defineEventHandler(async (event) => {
       queryBuilder = queryBuilder.eq("status", status);
     }
 
-    queryBuilder = queryBuilder.limit(limit).order("created_at", { ascending: false });
+    queryBuilder = queryBuilder
+      .limit(limit)
+      .order("updated_at", { ascending: false })
+      .order("created_at", { ascending: false });
 
     const { data, error } = await queryBuilder;
 

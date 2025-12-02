@@ -8,7 +8,7 @@
           </div>
           <div>
             <p class="text-xs uppercase tracking-[0.4em] text-slate-400">Admin Portal</p>
-            <h1 class="mt-2 text-3xl font-semibold text-slate-900">Thịnh Hưng Phát</h1>
+            <h1 class="mt-2 text-3xl font-semibold text-slate-900">Thành Hưng Phát</h1>
             <p class="mt-3 text-sm text-slate-500">Quản trị nội dung & người dùng</p>
           </div>
         </div>

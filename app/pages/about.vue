@@ -19,7 +19,7 @@
           :delay="100"
           class="text-xl md:text-2xl text-gray-200"
         >
-          Về công ty Thịnh Hưng Phát
+          Về công ty Thành Hưng Phát
         </p>
       </div>
     </section>
@@ -41,7 +41,7 @@
             </div>
             <h2 class="text-4xl font-bold mb-6 bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent">Về chúng tôi</h2>
             <p class="text-lg text-gray-600 mb-6 leading-relaxed">
-              Thịnh Hưng Phát là công ty chuyên cung cấp than đá chất lượng cao với nhiều năm kinh nghiệm trong ngành năng lượng.
+              Thành Hưng Phát là công ty chuyên cung cấp than đá chất lượng cao với nhiều năm kinh nghiệm trong ngành năng lượng.
             </p>
             <p class="text-lg text-gray-600 leading-relaxed">
               Chúng tôi tự hào là đối tác tin cậy của nhiều doanh nghiệp và hộ gia đình trong việc cung cấp nguồn năng lượng ổn định và hiệu quả.
@@ -119,9 +119,9 @@
 
 <script setup lang="ts">
 useHead({
-  title: "Giới thiệu - Thịnh Hưng Phát",
+  title: "Giới thiệu - Thành Hưng Phát",
   meta: [
-    { name: "description", content: "Giới thiệu về công ty Thịnh Hưng Phát - Chuyên cung cấp than đá chất lượng cao" },
+    { name: "description", content: "Giới thiệu về công ty Thành Hưng Phát - Chuyên cung cấp than đá chất lượng cao" },
   ],
 });
 

@@ -47,14 +47,14 @@ export default defineNuxtConfig({
   },
   app: {
     head: {
-      title: "Thịnh Hưng Phát - Chuyên cung cấp than đá chất lượng cao",
+      title: "Thành Hưng Phát - Chuyên cung cấp than đá chất lượng cao",
       meta: [
         { charset: "utf-8" },
         { name: "viewport", content: "width=device-width, initial-scale=1" },
         {
           name: "description",
           content:
-            "Thịnh Hưng Phát - Chuyên cung cấp than đá chất lượng cao, uy tín, giá cả hợp lý",
+            "Thành Hưng Phát - Chuyên cung cấp than đá chất lượng cao, uy tín, giá cả hợp lý",
         },
       ],
     },

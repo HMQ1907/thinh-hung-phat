@@ -17,7 +17,6 @@ export default defineEventHandler(async (event) => {
       .from("posts")
       .select("*, category:categories(*), author:users(*)")
       .eq("slug", slug)
-      .eq("status", "published")
       .single();
 
     if (error) {

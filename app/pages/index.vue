@@ -8,7 +8,7 @@
           v-motion-fade
           class="text-4xl md:text-6xl font-bold mb-6"
         >
-          Thịnh Hưng Phát
+          Thành Hưng Phát
         </h1>
         <p
           v-motion-fade
@@ -59,7 +59,7 @@
           class="text-center mb-16"
         >
           <h2 class="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent">
-            Tại sao chọn Thịnh Hưng Phát?
+            Tại sao chọn Thành Hưng Phát?
           </h2>
           <p class="text-lg text-gray-600 max-w-2xl mx-auto">
             Chúng tôi cam kết mang đến dịch vụ tốt nhất với giá cả hợp lý
@@ -93,10 +93,10 @@
               Về chúng tôi
             </div>
             <h2 class="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent">
-              Thịnh Hưng Phát
+              Thành Hưng Phát
             </h2>
             <p class="text-gray-600 mb-6 text-lg leading-relaxed">
-              Thịnh Hưng Phát là công ty chuyên cung cấp than đá chất lượng cao với nhiều năm kinh nghiệm trong ngành năng lượng.
+              Thành Hưng Phát là công ty chuyên cung cấp than đá chất lượng cao với nhiều năm kinh nghiệm trong ngành năng lượng.
             </p>
             <p class="text-gray-600 mb-8 text-lg leading-relaxed">
               Chúng tôi cam kết mang đến cho khách hàng sản phẩm than đá tốt nhất với giá cả hợp lý và dịch vụ chuyên nghiệp, đáp ứng mọi nhu cầu của khách hàng.
@@ -280,8 +280,7 @@
     <!-- CTA Section -->
     <section class="py-20 md:py-28 bg-gradient-to-br from-primary via-primary to-primary/90 text-primary-foreground relative overflow-hidden">
       <div
-        class="absolute inset-0 opacity-20"
-        style="background-image: url('data:image/svg+xml,%3Csvg width=&quot;60&quot; height=&quot;60&quot; viewBox=&quot;0 0 60 60&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot;%3E%3Cg fill=&quot;none&quot; fill-rule=&quot;evenodd&quot;%3E%3Cg fill=&quot;%23ffffff&quot; fill-opacity=&quot;0.05&quot;%3E%3Cpath d=&quot;M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z&quot;/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')"
+        class="absolute inset-0 opacity-20 bg-gradient-to-br from-white/10 to-transparent"
       ></div>
       <div class="container mx-auto px-4 text-center relative z-10">
         <div
@@ -313,9 +312,9 @@
 import type { Product, Post, APIResponse } from "~/types";
 
 useHead({
-  title: "Trang chủ - Thịnh Hưng Phát",
+  title: "Trang chủ - Thành Hưng Phát",
   meta: [
-    { name: "description", content: "Thịnh Hưng Phát - Chuyên cung cấp than đá chất lượng cao" },
+    { name: "description", content: "Thành Hưng Phát - Chuyên cung cấp than đá chất lượng cao" },
   ],
 });
 

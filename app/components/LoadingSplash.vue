@@ -11,12 +11,12 @@
           :enter="{ opacity: 1, scale: 1, transition: { duration: 900, easing: 'ease-out' } }"
           class="flex flex-col items-center space-y-4 text-center"
         >
-          <p class="text-sm uppercase tracking-[0.6em] text-slate-400">Thinh Hung Phat</p>
+          <p class="text-sm uppercase tracking-[0.6em] text-slate-400">THANH HUNG PHAT</p>
           <div
             class="text-[clamp(40px,9vw,110px)] font-semibold uppercase tracking-[0.35em] text-transparent"
             :style="{ WebkitTextStroke: '1px rgba(59,130,246,0.6)' }"
           >
-            Thịnh Hưng Phát
+            Thành Hưng Phát
           </div>
           <div class="h-1 w-24 animate-pulse rounded-full bg-slate-300" />
         </div>

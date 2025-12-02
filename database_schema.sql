@@ -1,4 +1,4 @@
--- Database Schema cho Website Thịnh Hưng Phát
+-- Database Schema cho Website Thành Hưng Phát
 -- Chạy SQL này trong Supabase SQL Editor
 
 -- Bảng Users (cho admin)

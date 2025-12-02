@@ -14,8 +14,10 @@ export default defineEventHandler(async (event) => {
       .from("posts")
       .select("*, category:categories(*), author:users(*)");
 
-    // Always filter by published for public API
-    queryBuilder = queryBuilder.eq("status", "published");
+    // Nếu có truyền status thì filter, còn không thì lấy tất cả
+    if (status) {
+      queryBuilder = queryBuilder.eq("status", status);
+    }
 
     queryBuilder = queryBuilder
       .limit(limit)

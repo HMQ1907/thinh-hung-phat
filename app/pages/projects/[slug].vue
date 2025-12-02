@@ -124,11 +124,11 @@ const { data: response, pending, error } = await useFetch<APIResponse<Project>>(
 const project = computed(() => response.value?.data);
 
 useHead({
-  title: project.value ? `${project.value.name} - Thịnh Hưng Phát` : "Dự án",
+  title: project.value ? `${project.value.name} - Thành Hưng Phát` : "Dự án",
   meta: [
     {
       name: "description",
-      content: project.value?.description || "Chi tiết dự án của Thịnh Hưng Phát",
+      content: project.value?.description || "Chi tiết dự án của Thành Hưng Phát",
     },
     {
       property: "og:title",
@@ -136,7 +136,7 @@ useHead({
     },
     {
       property: "og:description",
-      content: project.value?.description || "Chi tiết dự án của Thịnh Hưng Phát",
+      content: project.value?.description || "Chi tiết dự án của Thành Hưng Phát",
     },
     {
       property: "og:image",

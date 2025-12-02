@@ -88,11 +88,11 @@
 import type { Project, APIResponse } from "~/types";
 
 useHead({
-  title: "Dự án tiêu biểu - Thịnh Hưng Phát",
+  title: "Dự án tiêu biểu - Thành Hưng Phát",
   meta: [
     {
       name: "description",
-      content: "Danh sách dự án tiêu biểu của Thịnh Hưng Phát, cung cấp than đá chất lượng cho đối tác toàn quốc.",
+      content: "Danh sách dự án tiêu biểu của Thành Hưng Phát, cung cấp than đá chất lượng cho đối tác toàn quốc.",
     },
   ],
 });

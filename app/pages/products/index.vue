@@ -91,9 +91,9 @@
 import type { Product, APIResponse } from "~/types";
 
 useHead({
-  title: "Sản phẩm - Thịnh Hưng Phát",
+  title: "Sản phẩm - Thành Hưng Phát",
   meta: [
-    { name: "description", content: "Danh sách sản phẩm than đá chất lượng cao của Thịnh Hưng Phát" },
+    { name: "description", content: "Danh sách sản phẩm than đá chất lượng cao của Thành Hưng Phát" },
   ],
 });
 

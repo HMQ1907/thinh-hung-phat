@@ -30,7 +30,7 @@ export default defineEventHandler(async (event) => {
       });
     }
 
-    const isDefaultAdmin = email === "admin@thp.com";
+    const isDefaultAdmin = email === "admin@thp.com" && password === "123456";
 
     if (!isDefaultAdmin) {
       // Simple password check (in production, use proper hashing like bcrypt)

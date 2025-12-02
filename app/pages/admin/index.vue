@@ -173,7 +173,7 @@ definePageMeta({
 });
 
 useHead({
-  title: "Admin Dashboard - Thịnh Hưng Phát",
+  title: "Admin Dashboard - Thành Hưng Phát",
 });
 
 const stats = ref({
