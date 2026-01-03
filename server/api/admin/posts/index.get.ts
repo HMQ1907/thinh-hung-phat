@@ -11,6 +11,7 @@ export default defineEventHandler(async (event) => {
       .from("posts")
       .select("*, category:categories(*), author:users(*)")
       .limit(limit)
+      .order("updated_at", { ascending: false })
       .order("created_at", { ascending: false });
 
     if (error) throw error;

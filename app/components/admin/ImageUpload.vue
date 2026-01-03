@@ -11,15 +11,35 @@
         :alt="label"
         class="h-48 w-full rounded-xl object-cover border border-gray-200"
       />
-      <button
-        type="button"
-        @click="removeImage"
-        class="absolute top-2 right-2 rounded-full bg-red-500 p-2 text-white shadow-lg hover:bg-red-600 transition"
-      >
-        <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-        </svg>
-      </button>
+      <div class="absolute top-2 right-2 flex gap-2">
+        <button
+          type="button"
+          @click="fileInput?.click()"
+          class="rounded-full bg-primary p-2 text-white shadow-lg hover:bg-primary/90 transition"
+          title="Thay đổi hình ảnh"
+        >
+          <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
+          </svg>
+        </button>
+        <button
+          type="button"
+          @click="removeImage"
+          class="rounded-full bg-red-500 p-2 text-white shadow-lg hover:bg-red-600 transition"
+          title="Xóa hình ảnh"
+        >
+          <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+      <input
+        ref="fileInput"
+        type="file"
+        accept="image/*"
+        class="hidden"
+        @change="handleFileSelect"
+      />
     </div>
 
     <div
@@ -136,6 +156,10 @@ const uploadFile = async (file: File) => {
     if (response.success && response.data?.url) {
       previewUrl.value = response.data.url;
       emit('update:modelValue', response.data.url);
+      // Reset file input để có thể chọn lại cùng file nếu cần
+      if (fileInput.value) {
+        fileInput.value.value = '';
+      }
     }
   } catch (error: any) {
     const toast = useToast();

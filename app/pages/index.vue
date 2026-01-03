@@ -1,8 +1,19 @@
 <template>
   <div>
     <!-- Hero Section -->
-    <section class="relative h-[600px] md:h-[700px] flex items-center justify-center bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white">
-      <div class="absolute inset-0 bg-black/40 z-0"></div>
+    <section class="relative h-[600px] md:h-[700px] flex items-center justify-center text-white overflow-hidden">
+      <!-- Background Image -->
+      <div class="absolute inset-0 z-0">
+        <NuxtImg
+          src="https://media.vneconomy.vn/images/upload/2025/03/05/nang-luong-xanh4.png?w=600"
+          alt="Năng lượng xanh"
+          class="w-full h-full object-cover"
+          loading="eager"
+          format="webp"
+        />
+      </div>
+      <!-- Overlay -->
+      <div class="absolute inset-0 bg-black/50 z-0"></div>
       <div class="container mx-auto px-4 relative z-10 text-center">
         <h1
           v-motion-fade
@@ -119,8 +130,8 @@
             class="relative h-[500px] rounded-2xl overflow-hidden shadow-2xl group"
           >
             <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent z-10"></div>
-            <img
-              src="https://images.unsplash.com/photo-1581092160562-40aa08e78837?w=800"
+            <NuxtImg
+              src="/thandep.jpg"
               alt="About us"
               class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500"
             />
@@ -147,13 +158,13 @@
           <div class="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
           <p class="mt-4 text-gray-600">Đang tải sản phẩm...</p>
         </div>
-        <div v-else-if="products && products.length > 0" class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div v-else-if="products && products.length > 0" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
           <NuxtLink
-            v-for="(product, index) in products.slice(0, 3)"
+            v-for="(product, index) in products"
             :key="product.id"
             :to="`/products/${product.slug}`"
             v-motion-slide-visible-once-bottom
-            :delay="index * 100"
+            :delay="index * 50"
             class="group bg-white rounded-2xl overflow-hidden border border-gray-200 hover:border-primary/50 hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2"
           >
             <div class="relative h-64 bg-gradient-to-br from-gray-100 to-gray-200 overflow-hidden">
@@ -338,7 +349,7 @@ const features = [
 
 // Fetch products
 const { data: productsResponse, pending } = await useFetch<APIResponse<Product[]>>("/api/products", {
-  query: { limit: 3, status: "active" },
+  default: () => ({ data: [], status: 200, success: true }),
 });
 
 const products = computed(() => productsResponse.value?.data || []);

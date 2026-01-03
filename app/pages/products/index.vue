@@ -62,9 +62,6 @@
             <div class="p-6">
               <h3 class="text-2xl font-bold mb-3 text-gray-900 group-hover:text-primary transition-colors">{{ product.name }}</h3>
               <p class="text-gray-600 mb-4 line-clamp-3 leading-relaxed">{{ product.description }}</p>
-              <div v-if="product.price" class="mb-6">
-                <span class="text-3xl font-bold text-primary">{{ formatPrice(product.price) }}</span>
-              </div>
               <div class="flex items-center text-primary font-semibold group-hover:gap-2 transition-all">
                 <span>Xem chi tiết</span>
                 <svg class="h-5 w-5 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -103,12 +100,5 @@ const { data: response, pending, error } = await useFetch<APIResponse<Product[]>
 });
 
 const products = computed(() => response.value?.data || []);
-
-const formatPrice = (price: number) => {
-  return new Intl.NumberFormat("vi-VN", {
-    style: "currency",
-    currency: "VND",
-  }).format(price);
-};
 </script>
 

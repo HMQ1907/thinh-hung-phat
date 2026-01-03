@@ -1,4 +1,4 @@
-# Hướng Dẫn Setup Website Thịnh Hưng Phát
+# Hướng Dẫn Setup Website Thành Hưng Phát
 
 ## 📋 Yêu Cầu
 

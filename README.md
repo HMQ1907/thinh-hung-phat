@@ -1,75 +1,93 @@
-# Nuxt Minimal Starter
+# Thành Hưng Phát - Website Quản lý Than Đá
 
-Look at the [Nuxt documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+Website hiện đại cho công ty Thành Hưng Phát, chuyên cung cấp than đá chất lượng cao.
 
-## Setup
+## 🚀 Tech Stack
 
-Make sure to install dependencies:
+- **Framework:** Nuxt 4
+- **Database & Storage:** Supabase (PostgreSQL + Storage)
+- **Styling:** Tailwind CSS v4
+- **Animations:** VueUse Motion
+- **UI Components:** Headless UI Vue
+- **Notifications:** Vue Sonner
+
+## 📦 Cài đặt
 
 ```bash
-# npm
+# Clone repository
+git clone <repository-url>
+cd tan_hong_minh_nuxt
+
+# Cài đặt dependencies
 npm install
 
-# pnpm
-pnpm install
-
-# yarn
-yarn install
-
-# bun
-bun install
-```
-
-## Development Server
-
-Start the development server on `http://localhost:3000`:
-
-```bash
-# npm
+# Chạy development server
 npm run dev
-
-# pnpm
-pnpm dev
-
-# yarn
-yarn dev
-
-# bun
-bun run dev
 ```
 
-## Production
+## 🔧 Cấu hình Environment Variables
 
-Build the application for production:
+Tạo file `.env` trong root directory:
 
-```bash
-# npm
-npm run build
-
-# pnpm
-pnpm build
-
-# yarn
-yarn build
-
-# bun
-bun run build
+```env
+SUPABASE_URL=https://your-project.supabase.co
+SUPABASE_KEY=your-anon-key
+SUPABASE_SECRET_KEY=your-service-role-key
 ```
 
-Locally preview production build:
+## 🚀 Deploy lên Vercel
 
-```bash
-# npm
-npm run preview
+Xem hướng dẫn chi tiết: [QUICK_DEPLOY.md](./QUICK_DEPLOY.md) hoặc [DEPLOY.md](./DEPLOY.md)
 
-# pnpm
-pnpm preview
+### Tóm tắt nhanh:
 
-# yarn
-yarn preview
+1. Push code lên GitHub
+2. Import project vào Vercel
+3. Thêm 3 environment variables:
+   - `SUPABASE_URL`
+   - `SUPABASE_KEY`
+   - `SUPABASE_SECRET_KEY`
+4. Deploy!
 
-# bun
-bun run preview
+## 📁 Cấu trúc Project
+
+```
+app/
+├── components/     # Vue components
+├── layouts/        # Layout templates
+├── pages/          # Pages (file-based routing)
+├── assets/         # Static assets
+├── types/          # TypeScript types
+└── utils/          # Utility functions
+
+server/
+├── api/            # API routes
+└── middleware/     # Server middleware
 ```
 
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+## 🔐 Admin Panel
+
+- URL: `/admin/login`
+- Default admin: `admin@thp.com` (bypass password)
+
+## 📝 Features
+
+- ✅ Quản lý bài viết (Posts)
+- ✅ Quản lý dự án (Projects)
+- ✅ Quản lý sản phẩm (Products)
+- ✅ Quản lý danh mục (Categories)
+- ✅ Quản lý liên hệ (Contacts)
+- ✅ Quản lý người dùng (Users)
+- ✅ Upload hình ảnh lên Supabase Storage
+- ✅ Responsive design
+- ✅ Modern UI/UX
+
+## 📚 Documentation
+
+- [Deploy Guide](./DEPLOY.md) - Hướng dẫn deploy chi tiết
+- [Quick Deploy](./QUICK_DEPLOY.md) - Hướng dẫn deploy nhanh
+- [Environment Variables](./ENV_VARIABLES.md) - Danh sách env variables
+
+## 📄 License
+
+Private - Thành Hưng Phát
