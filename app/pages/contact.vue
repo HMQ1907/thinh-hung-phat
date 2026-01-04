@@ -147,7 +147,7 @@
                 </div>
                 <div>
                   <h3 class="font-semibold mb-1 text-lg">Email</h3>
-                  <p class="text-muted-foreground">info@thinhungphat.com</p>
+                  <p class="text-muted-foreground">contact@thanhhungphat.com</p>
                 </div>
               </div>
                      <div class="flex items-start space-x-4">

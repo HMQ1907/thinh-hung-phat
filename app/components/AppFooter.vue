@@ -158,9 +158,9 @@
               <div>
                 <p class="text-gray-500 text-xs mb-1">Email</p>
                 <a
-                  href="mailto:info@thinhungphat.com"
+                  href="mailto:contact@thanhhungphat.com"
                   class="text-gray-700 hover:text-primary font-medium transition-colors"
-                  >info@thinhungphat.com</a
+                  >contact@thanhhungphat.com</a
                 >
               </div>
             </li>
