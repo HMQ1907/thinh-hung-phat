@@ -102,6 +102,7 @@ useHead({
 });
 
 const { data: response, pending, error } = await useFetch<APIResponse<Post[]>>("/api/posts", {
+  query: { limit: 100 },
   default: () => ({ data: [], status: 200, success: true }),
 });
 

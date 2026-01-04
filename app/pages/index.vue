@@ -62,41 +62,8 @@
       </div>
     </section>
 
-    <!-- Features Section -->
-    <section class="py-20 md:py-28 bg-white">
-      <div class="container mx-auto px-4">
-        <div
-          v-motion-fade
-          class="text-center mb-16"
-        >
-          <h2 class="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent">
-            Tại sao chọn Thành Hưng Phát?
-          </h2>
-          <p class="text-lg text-gray-600 max-w-2xl mx-auto">
-            Chúng tôi cam kết mang đến dịch vụ tốt nhất với giá cả hợp lý
-          </p>
-        </div>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-          <div
-            v-for="(feature, index) in features"
-            :key="index"
-            v-motion-slide-visible-once-bottom
-            :delay="index * 100"
-            class="group relative bg-white rounded-2xl p-8 border border-gray-200 hover:border-primary/50 hover:shadow-xl transition-all duration-300"
-          >
-            <div class="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity"></div>
-            <div class="relative">
-              <div class="text-5xl mb-6 transform group-hover:scale-110 transition-transform duration-300">{{ feature.icon }}</div>
-              <h3 class="text-xl font-bold mb-3 text-gray-900">{{ feature.title }}</h3>
-              <p class="text-gray-600 leading-relaxed">{{ feature.description }}</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
     <!-- About Section -->
-    <section class="py-20 md:py-28 bg-gradient-to-br from-gray-50 via-white to-gray-50">
+    <section class="py-12 md:py-16 bg-gradient-to-br from-gray-50 via-white to-gray-50">
       <div class="container mx-auto px-4">
         <div class="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
           <div v-motion-slide-visible-once-left>
@@ -141,11 +108,11 @@
     </section>
 
     <!-- Products Preview -->
-    <section class="py-20 md:py-28 bg-white">
+    <section class="py-12 md:py-16 bg-white">
       <div class="container mx-auto px-4">
         <div
           v-motion-fade
-          class="text-center mb-16"
+          class="text-center mb-10"
         >
           <h2 class="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent">
             Sản phẩm nổi bật
@@ -196,7 +163,7 @@
         <div v-else class="text-center py-20">
           <p class="text-gray-600">Chưa có sản phẩm nào</p>
         </div>
-        <div class="text-center mt-12">
+        <div class="text-center mt-8">
           <NuxtLink
             to="/products"
             class="inline-flex items-center space-x-2 px-8 py-4 bg-primary text-primary-foreground rounded-xl font-semibold hover:bg-primary/90 transition-all shadow-lg hover:shadow-xl"
@@ -210,12 +177,106 @@
       </div>
     </section>
 
+    <!-- Why Choose Us Section -->
+    <section class="py-12 md:py-20 bg-white relative overflow-hidden">
+      <!-- Background Pattern -->
+      <div class="absolute inset-0 opacity-[0.02]">
+        <div class="absolute inset-0" style="background-image: radial-gradient(circle at 2px 2px, currentColor 1px, transparent 0); background-size: 40px 40px;"></div>
+      </div>
+      
+      <div class="container mx-auto px-4 relative z-10">
+        <!-- Header -->
+        <div
+          v-motion-fade
+          class="text-center mb-12"
+        >
+          <h2 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-gray-900">
+            Thành Hưng Phát - Đối tác tin cậy của bạn
+          </h2>
+          <p class="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+            Với hơn 7 năm kinh nghiệm, chúng tôi tự hào là nhà cung cấp than đá hàng đầu với chất lượng vượt trội và dịch vụ chuyên nghiệp
+          </p>
+        </div>
+
+        <!-- Stats Grid -->
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8 mb-12">
+          <div
+            v-for="(stat, index) in stats"
+            :key="index"
+            v-motion-slide-visible-once-bottom
+            :delay="index * 100"
+            class="text-center group"
+          >
+            <div class="bg-gradient-to-br from-primary/10 to-primary/5 rounded-2xl p-6 md:p-8 border border-primary/20 hover:border-primary/40 hover:shadow-xl transition-all duration-300">
+              <div class="text-4xl md:text-5xl font-bold text-primary mb-2 group-hover:scale-110 transition-transform duration-300">
+                {{ stat.value }}
+              </div>
+              <div class="text-sm md:text-base text-gray-600 font-medium">
+                {{ stat.label }}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Benefits Grid -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12">
+          <div
+            v-for="(benefit, index) in benefits"
+            :key="index"
+            v-motion-slide-visible-once-left
+            :delay="index * 150"
+            class="group"
+          >
+            <div class="flex gap-6 p-6 rounded-2xl hover:bg-gray-50 transition-all duration-300">
+              <!-- Icon -->
+              <div class="flex-shrink-0">
+                <div class="w-16 h-16 rounded-xl bg-gradient-to-br from-primary to-primary/80 flex items-center justify-center shadow-lg group-hover:scale-110 group-hover:rotate-3 transition-all duration-300">
+                  <div class="text-3xl">{{ benefit.icon }}</div>
+                </div>
+              </div>
+              
+              <!-- Content -->
+              <div class="flex-1">
+                <h3 class="text-2xl font-bold text-gray-900 mb-3 group-hover:text-primary transition-colors">
+                  {{ benefit.title }}
+                </h3>
+                <p class="text-gray-600 leading-relaxed text-lg">
+                  {{ benefit.description }}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Trust Indicators -->
+        <div
+          v-motion-fade
+          class="mt-12 pt-8 border-t border-gray-200"
+        >
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+            <div class="p-6">
+              <div class="text-3xl font-bold text-primary mb-2">100%</div>
+              <div class="text-gray-600">Khách hàng hài lòng</div>
+            </div>
+            <div class="p-6 border-x border-gray-200">
+              <div class="text-3xl font-bold text-primary mb-2">24/7</div>
+              <div class="text-gray-600">Hỗ trợ khách hàng</div>
+            </div>
+            <div class="p-6">
+              <div class="text-3xl font-bold text-primary mb-2">500+</div>
+              <div class="text-gray-600">Dự án thành công</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- Blog Preview -->
-    <section class="py-20 md:py-28 bg-gradient-to-br from-gray-50 via-white to-gray-50">
+    <section class="py-12 md:py-16 bg-gradient-to-br from-gray-50 via-white to-gray-50">
       <div class="container mx-auto px-4">
         <div
           v-motion-fade
-          class="text-center mb-16"
+          class="text-center mb-10"
         >
           <h2 class="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent">
             Tin tức mới nhất
@@ -230,7 +291,7 @@
         </div>
         <div v-else-if="posts && posts.length > 0" class="grid grid-cols-1 md:grid-cols-3 gap-8">
           <NuxtLink
-            v-for="(post, index) in posts.slice(0, 3)"
+            v-for="(post, index) in posts"
             :key="post.id"
             :to="`/blog/${post.slug}`"
             v-motion-slide-visible-once-bottom
@@ -274,7 +335,7 @@
         <div v-else class="text-center py-20">
           <p class="text-gray-600">Chưa có bài viết nào</p>
         </div>
-        <div class="text-center mt-12">
+        <div class="text-center mt-8">
           <NuxtLink
             to="/blog"
             class="inline-flex items-center space-x-2 px-8 py-4 bg-primary text-primary-foreground rounded-xl font-semibold hover:bg-primary/90 transition-all shadow-lg hover:shadow-xl"
@@ -289,7 +350,7 @@
     </section>
 
     <!-- CTA Section -->
-    <section class="py-20 md:py-28 bg-gradient-to-br from-primary via-primary to-primary/90 text-primary-foreground relative overflow-hidden">
+    <section class="py-12 md:py-20 bg-gradient-to-br from-primary via-primary to-primary/90 text-primary-foreground relative overflow-hidden">
       <div
         class="absolute inset-0 opacity-20 bg-gradient-to-br from-white/10 to-transparent"
       ></div>
@@ -329,21 +390,55 @@ useHead({
   ],
 });
 
-const features = [
+const stats = [
+  {
+    value: "7+",
+    label: "Năm kinh nghiệm",
+  },
+  {
+    value: "100+",
+    label: "Dự án thành công",
+  },
+  {
+    value: "300+",
+    label: "Khách hàng tin tưởng",
+  },
+  {
+    value: "24/7",
+    label: "Hỗ trợ khách hàng",
+  },
+];
+
+const benefits = [
   {
     icon: "🔥",
-    title: "Chất lượng cao",
-    description: "Than đá được chọn lọc kỹ càng, đảm bảo chất lượng tốt nhất",
+    title: "Chất lượng vượt trội",
+    description: "Than đá được tuyển chọn kỹ lưỡng từ các mỏ uy tín, đảm bảo nhiệt lượng cao và độ ẩm thấp, phù hợp cho mọi loại lò hơi công nghiệp.",
   },
   {
     icon: "💰",
-    title: "Giá cả hợp lý",
-    description: "Giá cả cạnh tranh, phù hợp với mọi đối tượng khách hàng",
+    title: "Giá cả cạnh tranh",
+    description: "Cam kết giá tốt nhất thị trường với chính sách báo giá minh bạch, không phát sinh chi phí ẩn, giúp doanh nghiệp tối ưu chi phí sản xuất.",
   },
   {
     icon: "🚚",
-    title: "Giao hàng nhanh",
-    description: "Dịch vụ giao hàng tận nơi, nhanh chóng và tiện lợi",
+    title: "Giao hàng nhanh chóng",
+    description: "Hệ thống vận chuyển hiện đại với đội xe lớn, đảm bảo giao hàng đúng hẹn đến mọi địa điểm trên toàn quốc, hỗ trợ 24/7.",
+  },
+  {
+    icon: "✅",
+    title: "Dịch vụ chuyên nghiệp",
+    description: "Đội ngũ tư vấn giàu kinh nghiệm, hỗ trợ kỹ thuật tận tâm, đảm bảo khách hàng nhận được giải pháp tối ưu cho nhu cầu của mình.",
+  },
+  {
+    icon: "🛡️",
+    title: "Uy tín đã được chứng minh",
+    description: "Được tin tưởng bởi hàng trăm doanh nghiệp lớn nhỏ, với tỷ lệ khách hàng quay lại lên đến 95%, minh chứng cho chất lượng dịch vụ.",
+  },
+  {
+    icon: "🌱",
+    title: "Cam kết bền vững",
+    description: "Tuân thủ nghiêm ngặt các tiêu chuẩn môi trường, cung cấp than sạch, hỗ trợ khách hàng trong việc giảm thiểu tác động môi trường.",
   },
 ];
 
@@ -354,16 +449,18 @@ const { data: productsResponse, pending } = await useFetch<APIResponse<Product[]
 
 const products = computed(() => productsResponse.value?.data || []);
 
-// Fetch posts
+// Fetch posts - request more to ensure we have 3 valid posts after filtering
 const { data: postsResponse, pending: postsPending } = await useFetch<APIResponse<Post[]>>("/api/posts", {
-  query: { limit: 3 },
+  query: { limit: 6 },
   default: () => ({ data: [], status: 200, success: true }),
 });
 
 const posts = computed(() => {
   const data = postsResponse.value?.data || [];
-  console.log("[Home] Posts loaded:", data.length, "posts");
-  return data;
+  // Take only first 3 posts to display on homepage
+  const limitedPosts = data.slice(0, 3);
+  console.log("[Home] Posts loaded:", data.length, "total, showing:", limitedPosts.length, "posts");
+  return limitedPosts;
 });
 
 const formatDate = (date: string) => {
