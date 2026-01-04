@@ -263,7 +263,7 @@
               <div class="text-gray-600">Hỗ trợ khách hàng</div>
             </div>
             <div class="p-6">
-              <div class="text-3xl font-bold text-primary mb-2">500+</div>
+              <div class="text-3xl font-bold text-primary mb-2">100+</div>
               <div class="text-gray-600">Dự án thành công</div>
             </div>
           </div>
