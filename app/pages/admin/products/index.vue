@@ -127,7 +127,13 @@
     <div class="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm">
       <div class="flex items-center justify-between">
         <h2 class="text-xl font-semibold text-gray-900">Danh sách sản phẩm</h2>
-        <p class="text-sm text-gray-500">{{ products.length }} sản phẩm</p>
+        <p class="text-sm text-gray-500">
+          {{ products.length }} sản phẩm
+          <span class="text-gray-300">·</span>
+          <span class="font-semibold text-emerald-600">{{ activeCount }} hiển thị</span>
+          <span class="text-gray-300">·</span>
+          <span class="font-semibold text-gray-500">{{ inactiveCount }} ẩn</span>
+        </p>
       </div>
 
       <div v-if="pending" class="mt-6 grid gap-4">
@@ -146,7 +152,10 @@
         <div
           v-for="product in products"
           :key="product.id"
-          class="flex flex-col gap-4 rounded-xl border border-gray-100 p-4 md:flex-row md:items-center md:justify-between"
+          class="flex flex-col gap-4 rounded-xl border p-4 transition-colors md:flex-row md:items-center md:justify-between"
+          :class="product.status === 'active'
+            ? 'border-gray-100 bg-white'
+            : 'border-gray-200 border-dashed bg-gray-50'"
         >
           <div class="flex items-center gap-4">
             <img
@@ -159,7 +168,21 @@
               {{ product.name?.charAt(0) }}
             </div>
             <div>
-              <h3 class="text-lg font-semibold text-gray-900">{{ product.name }}</h3>
+              <div class="flex flex-wrap items-center gap-2">
+                <h3 class="text-lg font-semibold text-gray-900">{{ product.name }}</h3>
+                <span
+                  class="inline-flex items-center gap-1.5 rounded-full px-2.5 py-0.5 text-xs font-semibold ring-1"
+                  :class="product.status === 'active'
+                    ? 'bg-emerald-50 text-emerald-700 ring-emerald-200'
+                    : 'bg-gray-100 text-gray-500 ring-gray-200'"
+                >
+                  <span
+                    class="h-1.5 w-1.5 rounded-full"
+                    :class="product.status === 'active' ? 'bg-emerald-500' : 'bg-gray-400'"
+                  ></span>
+                  {{ product.status === 'active' ? 'Đang hiển thị' : 'Đang ẩn' }}
+                </span>
+              </div>
               <p class="text-sm text-gray-500">{{ product.slug }}</p>
               <p v-if="product.price" class="text-sm font-semibold text-primary">
                 {{ formatPrice(product.price) }}
@@ -167,6 +190,25 @@
             </div>
           </div>
           <div class="flex gap-2">
+            <UiButton
+              @click="toggleStatus(product)"
+              :loading="togglingId === product.id"
+              :disabled="togglingId === product.id"
+              loading-text="..."
+              :variant="product.status === 'active' ? 'secondary' : 'success'"
+              size="sm"
+            >
+              <template #icon>
+                <svg v-if="product.status === 'active'" class="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.98 8.223A10.477 10.477 0 001.934 12C3.226 16.338 7.244 19.5 12 19.5c.993 0 1.953-.138 2.863-.395M6.228 6.228A10.45 10.45 0 0112 4.5c4.756 0 8.773 3.162 10.065 7.498a10.523 10.523 0 01-4.293 5.774M6.228 6.228L3 3m3.228 3.228l3.65 3.65m7.894 7.894L21 21m-3.228-3.228l-3.65-3.65m0 0a3 3 0 10-4.243-4.243" />
+                </svg>
+                <svg v-else class="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z" />
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                </svg>
+              </template>
+              {{ product.status === 'active' ? 'Ẩn' : 'Hiện' }}
+            </UiButton>
             <UiButton
               @click="handleEdit(product)"
               variant="outline"
@@ -256,6 +298,8 @@ const { data: categoriesResponse } = await useFetch<APIResponse<Category[]>>("/a
 
 const products = computed(() => response.value?.data || []);
 const categories = computed(() => categoriesResponse.value?.data || []);
+const activeCount = computed(() => products.value.filter((p) => p.status === "active").length);
+const inactiveCount = computed(() => products.value.filter((p) => p.status !== "active").length);
 
 const formatPrice = (price: number) => {
   return new Intl.NumberFormat("vi-VN", {
@@ -335,6 +379,37 @@ const handleSubmit = async () => {
     toast.error('Có lỗi xảy ra: ' + (err.message || 'Không xác định'));
   } finally {
     submitting.value = false;
+  }
+};
+
+const togglingId = ref<string | null>(null);
+
+const toggleStatus = async (product: Product) => {
+  if (togglingId.value) return;
+  const nextStatus = product.status === "active" ? "inactive" : "active";
+  togglingId.value = product.id;
+
+  try {
+    await $fetch(`/api/admin/products/${product.id}`, {
+      method: "PUT",
+      body: {
+        name: product.name,
+        slug: product.slug,
+        description: product.description || null,
+        specifications: product.specifications || null,
+        price: product.price || null,
+        image_url: product.image_url || null,
+        category_id: product.category_id || null,
+        status: nextStatus,
+      },
+    });
+    toast.success(nextStatus === "active" ? "Đã hiển thị sản phẩm" : "Đã ẩn sản phẩm");
+    await refresh();
+  } catch (err: any) {
+    console.error("Toggle product status error:", err);
+    toast.error("Có lỗi xảy ra: " + (err.message || "Không xác định"));
+  } finally {
+    togglingId.value = null;
   }
 };
 
