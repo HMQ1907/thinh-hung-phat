@@ -12,9 +12,11 @@
             class="flex items-center space-x-3 mb-8 group"
             v-motion-fade
           >
-            <div class="h-10 w-10 rounded-xl bg-gradient-to-br from-primary to-primary/80 flex items-center justify-center shadow-lg group-hover:shadow-xl transition-shadow">
-              <span class="text-primary-foreground font-bold text-lg">THP</span>
-            </div>
+            <img
+              src="/logo-thp-removebg.png"
+              alt="Thành Hưng Phát"
+              class="h-12 w-auto object-contain shrink-0 transition-transform duration-300 group-hover:scale-105"
+            />
             <div>
               <span class="font-bold text-lg block">Admin Panel</span>
               <span class="text-xs text-gray-500">Thành Hưng Phát</span>
