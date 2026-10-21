@@ -1,83 +1,66 @@
 <template>
   <div>
-    <!-- Hero -->
-    <section class="relative overflow-hidden bg-linear-to-br from-slate-900 via-slate-800 to-slate-900 py-24 text-white">
-      <div class="container mx-auto px-4">
-        <div class="max-w-3xl">
-          <p class="text-sm uppercase tracking-[0.4em] text-white/60">Projects</p>
-          <h1 class="mt-4 text-4xl font-bold md:text-5xl">Dự án tiêu biểu</h1>
-          <p class="mt-6 text-lg text-white/80">
-            Những công trình chúng tôi đã thực hiện cho các đối tác lớn trong và ngoài nước. Mỗi dự án đều đảm bảo chất lượng than, tiến độ giao hàng và dịch vụ chuyên nghiệp.
-          </p>
-        </div>
-      </div>
-      <div class="absolute inset-y-0 right-0 hidden w-1/2 bg-linear-to-l from-white/5 to-transparent lg:block"></div>
-    </section>
+    <PageHero
+      eyebrow="Dự án"
+      code="// 03"
+      subtitle="Những công trình chúng tôi đã thực hiện cho các đối tác lớn trong và ngoài nước — đảm bảo chất lượng than, tiến độ giao hàng và dịch vụ chuyên nghiệp."
+      :crumbs="[{ label: 'Dự án' }]"
+    >
+      Dự án <span class="text-grad">tiêu biểu</span>
+    </PageHero>
 
-    <!-- Projects Grid -->
-    <section class="bg-linear-to-b from-white to-gray-100 py-20">
-      <div class="container mx-auto px-4">
-        <div class="mb-12 flex flex-col items-start justify-between gap-6 md:flex-row md:items-center">
-          <div>
-            <h2 class="mt-3 text-3xl font-bold text-gray-900">Các dự án đã thực hiện</h2>
-          </div>
-        </div>
-
+    <section class="py-20 md:py-28">
+      <div class="mx-auto max-w-7xl px-4 md:px-6">
         <div v-if="pending" class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          <div v-for="s in 6" :key="s" class="h-72 rounded-2xl bg-white shadow animate-pulse" />
+          <div v-for="s in 6" :key="s" class="h-96 animate-pulse rounded-3xl border border-white/5 bg-white/[0.03]" />
         </div>
 
-        <div v-else-if="error" class="rounded-2xl border border-red-200 bg-red-50 p-6 text-red-700">
+        <div v-else-if="error" class="rounded-3xl border border-red-400/30 bg-red-400/10 p-6 text-red-300">
           Không tải được dữ liệu dự án. Vui lòng thử lại sau.
         </div>
 
-        <div v-else-if="projects.length === 0" class="rounded-2xl border border-dashed border-gray-200 p-12 text-center text-gray-500">
+        <div v-else-if="projects.length === 0" class="rounded-3xl border border-dashed border-white/10 p-16 text-center text-slate-500">
           Chưa có dự án nào được công bố.
         </div>
 
-        <div v-else class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-          <NuxtLink
-            v-for="project in projects"
-            :key="project.id"
-            :to="`/projects/${project.slug}`"
-            class="group flex flex-col overflow-hidden rounded-3xl border border-gray-100 bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-xl"
-          >
-            <div class="relative h-56 w-full overflow-hidden">
-              <img
+        <div v-else class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          <div v-for="(project, i) in projects" :key="project.id" v-reveal="(i % 3) * 90" :class="i === 0 && projects.length % 3 === 2 ? 'lg:col-span-2' : ''">
+            <NuxtLink
+              :to="`/projects/${project.slug}`"
+              v-spotlight
+              class="spot group relative flex h-full min-h-[420px] flex-col justify-end overflow-hidden rounded-3xl border border-white/[0.08] bg-coal-850"
+            >
+              <NuxtImg
                 v-if="project.thumbnail"
                 :src="project.thumbnail"
                 :alt="project.name"
-                class="h-full w-full object-cover transition duration-500 group-hover:scale-105"
+                width="1000"
+                format="webp"
+                class="absolute inset-0 !z-0 h-full w-full object-cover transition duration-700 group-hover:scale-105"
+                loading="lazy"
               />
-              <div
-                v-else
-                class="flex h-full w-full items-center justify-center bg-linear-to-br from-slate-900 to-slate-700 text-white text-lg font-semibold"
-              >
-                {{ project.name.charAt(0) }}
+              <div v-else class="dots-bg absolute inset-0 !z-0 flex items-center justify-center">
+                <span class="font-display text-8xl font-bold text-white/5">{{ project.name.charAt(0) }}</span>
               </div>
-              <span
-                class="absolute left-4 top-4 rounded-full bg-white/90 px-4 py-1 text-xs font-semibold uppercase tracking-wide text-gray-800 shadow"
-              >
+              <div class="absolute inset-0 !z-0 bg-gradient-to-t from-coal-950 via-coal-950/60 to-transparent" />
+
+              <span class="absolute left-5 top-5 inline-flex items-center gap-2 rounded-full border border-white/15 bg-coal-950/60 px-3 py-1.5 text-xs font-medium text-white backdrop-blur">
+                <svg class="h-3.5 w-3.5 text-ember-300" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0zM19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" />
+                </svg>
                 {{ project.location || "Việt Nam" }}
               </span>
-            </div>
-            <div class="flex flex-1 flex-col space-y-4 p-6">
-              <div>
-                <p class="text-xs uppercase tracking-[0.4em] text-gray-400">Hoàn thành</p>
-                <h3 class="mt-2 text-xl font-semibold text-gray-900">{{ project.name }}</h3>
-                <p class="mt-2 text-sm text-gray-600 line-clamp-3">{{ project.description }}</p>
+
+              <div class="p-6 md:p-8">
+                <div class="font-mono text-xs uppercase tracking-widest text-neon-300">{{ formatDate(project.completed_at || project.created_at) }}</div>
+                <h3 class="font-display mt-3 text-2xl font-semibold leading-snug text-white md:text-3xl">{{ project.name }}</h3>
+                <p class="mt-3 line-clamp-2 text-sm leading-relaxed text-slate-300/80">{{ project.description }}</p>
+                <div class="mt-5 inline-flex items-center gap-2 text-sm font-medium text-ember-300">
+                  Xem chi tiết <span class="transition group-hover:translate-x-1">→</span>
+                </div>
               </div>
-              <div class="mt-auto flex items-center justify-between text-sm text-gray-500">
-                <span>{{ formatDate(project.completed_at || project.created_at) }}</span>
-                <span class="font-medium text-primary group-hover:gap-2 transition-all inline-flex items-center">
-                  Xem chi tiết
-                  <svg class="h-4 w-4 ml-1 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-                  </svg>
-                </span>
-              </div>
-            </div>
-          </NuxtLink>
+            </NuxtLink>
+          </div>
         </div>
       </div>
     </section>
@@ -108,5 +91,3 @@ const formatDate = (value?: string) => {
   return new Intl.DateTimeFormat("vi-VN", { year: "numeric", month: "short" }).format(new Date(value));
 };
 </script>
-
-

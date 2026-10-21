@@ -3,22 +3,35 @@
     <Transition name="splash">
       <div
         v-if="visible"
-        class="fixed inset-0 z-[9999] flex items-center justify-center bg-white"
+        class="fixed inset-0 z-[9999] flex items-center justify-center overflow-hidden bg-[#05070a]"
       >
+        <div class="grid-bg absolute inset-0 opacity-60" />
+        <div class="absolute left-1/2 top-1/2 h-[520px] w-[520px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#1fb8b1]/15 blur-[120px]" />
         <div
-          v-motion
-          :initial="{ opacity: 0, scale: 0.95 }"
-          :enter="{ opacity: 1, scale: 1, transition: { duration: 900, easing: 'ease-out' } }"
-          class="flex flex-col items-center space-y-4 text-center"
-        >
-          <p class="text-sm uppercase tracking-[0.6em] text-slate-400">THANH HUNG PHAT</p>
-          <div
-            class="text-[clamp(40px,9vw,110px)] font-semibold uppercase tracking-[0.35em] text-transparent"
-            :style="{ WebkitTextStroke: '1px rgba(59,130,246,0.6)' }"
-          >
-            Thành Hưng Phát
+          class="absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-transparent via-[#3ad8cf]/10 to-transparent"
+          style="animation: scan 2s linear infinite"
+        />
+
+        <div class="relative flex w-[min(420px,80vw)] flex-col items-center text-center">
+          <img
+            src="/logo-thp-crop.png"
+            alt="Thành Hưng Phát"
+            class="splash-logo h-auto w-full max-w-[300px] drop-shadow-[0_0_30px_rgba(58,216,207,.45)]"
+          />
+          <p class="mt-6 font-mono text-[11px] uppercase tracking-[0.5em] text-slate-500">
+            Thành Hưng Phát · Energy
+          </p>
+
+          <div class="mt-8 h-px w-full overflow-hidden bg-white/10">
+            <div
+              class="h-full bg-gradient-to-r from-[#3ad8cf] to-[#f6b13c] shadow-[0_0_12px_#3ad8cf]"
+              :style="{ width: progress + '%' }"
+            />
           </div>
-          <div class="h-1 w-24 animate-pulse rounded-full bg-slate-300" />
+          <div class="mt-3 flex w-full justify-between font-mono text-[11px] tracking-widest text-slate-500">
+            <span>KHỞI ĐỘNG HỆ THỐNG</span>
+            <span class="text-[#7cebe4]">{{ String(progress).padStart(3, "0") }}%</span>
+          </div>
         </div>
       </div>
     </Transition>
@@ -26,68 +39,75 @@
 </template>
 
 <script setup lang="ts">
+// Màn hình chào chỉ hiện ở trang chủ, 1 lần mỗi phiên truy cập.
 const visible = ref(false);
-let timer: ReturnType<typeof setTimeout> | null = null;
+const progress = ref(0);
 const route = useRoute();
+let raf = 0;
+let timer: ReturnType<typeof setTimeout> | null = null;
+const DURATION = 1500;
+const KEY = "thp-splash-seen";
 
-const hideWithDelay = () => {
-  if (timer) {
-    clearTimeout(timer);
+const alreadySeen = () => {
+  try {
+    return sessionStorage.getItem(KEY) === "1";
+  } catch {
+    return false;
   }
-  timer = setTimeout(() => {
-    visible.value = false;
-  }, 2200);
+};
+const markSeen = () => {
+  try {
+    sessionStorage.setItem(KEY, "1");
+  } catch {}
 };
 
-const triggerSplash = () => {
-  if (!process.client) return;
+const run = () => {
   visible.value = true;
-  hideWithDelay();
+  progress.value = 0;
+  const start = performance.now();
+  const tick = (t: number) => {
+    const k = Math.min(1, (t - start) / DURATION);
+    progress.value = Math.round((1 - Math.pow(1 - k, 2)) * 100);
+    if (k < 1) raf = requestAnimationFrame(tick);
+    else timer = setTimeout(() => (visible.value = false), 250);
+  };
+  raf = requestAnimationFrame(tick);
+  markSeen();
 };
-
-const shouldShowForRoute = () => route.path === "/";
 
 onMounted(() => {
-  if (shouldShowForRoute()) {
-    triggerSplash();
-  }
+  if (route.path !== "/" || alreadySeen()) return;
+  if (window.matchMedia?.("(prefers-reduced-motion: reduce)").matches) return;
+  run();
 });
 
-watch(
-  () => route.fullPath,
-  () => {
-    if (shouldShowForRoute()) {
-      triggerSplash();
-    } else {
-      visible.value = false;
-      if (timer) {
-        clearTimeout(timer);
-        timer = null;
-      }
-    }
-  }
-);
-
 onBeforeUnmount(() => {
-  if (timer) {
-    clearTimeout(timer);
-  }
+  cancelAnimationFrame(raf);
+  if (timer) clearTimeout(timer);
 });
 </script>
 
 <style scoped>
 .splash-leave-active {
-  transition: opacity 1.5s ease-in-out;
+  transition: opacity 0.8s ease, transform 0.8s ease;
 }
-
-.splash-enter-active {
-  transition: opacity 0.3s ease-out;
-}
-
-.splash-enter-from,
 .splash-leave-to {
   opacity: 0;
+  transform: scale(1.04);
+}
+.splash-logo {
+  animation: splash-in 1s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+@keyframes splash-in {
+  from {
+    opacity: 0;
+    filter: blur(12px);
+    transform: scale(0.94);
+  }
+  to {
+    opacity: 1;
+    filter: none;
+    transform: none;
+  }
 }
 </style>
-
-

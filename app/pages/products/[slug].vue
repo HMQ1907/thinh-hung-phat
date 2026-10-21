@@ -1,95 +1,84 @@
 <template>
   <div>
-    <div v-if="pending" class="text-center py-12">
-      <p class="text-muted-foreground">Đang tải...</p>
+    <div v-if="pending" class="flex min-h-[70vh] items-center justify-center">
+      <div class="h-12 w-12 animate-spin rounded-full border-2 border-white/10 border-t-neon-400" />
     </div>
-    <div v-else-if="error" class="text-center py-12">
-      <p class="text-red-500">Không tìm thấy sản phẩm</p>
+    <div v-else-if="error || !product" class="flex min-h-[70vh] flex-col items-center justify-center gap-6 px-4 pt-24 text-center">
+      <div class="font-display text-7xl font-bold text-white/10">404</div>
+      <p class="text-slate-400">Không tìm thấy sản phẩm</p>
+      <NuxtLink to="/products" class="btn btn-ghost">← Quay lại danh sách</NuxtLink>
     </div>
-    <div v-else-if="product">
-      <!-- Hero Section with Product Image -->
-      <section class="relative h-[500px] md:h-[600px] flex items-center justify-center overflow-hidden">
-        <!-- Background Image -->
-        <div v-if="product.image_url" class="absolute inset-0">
-          <NuxtImg
-            :src="product.image_url"
-            :alt="product.name"
-            class="w-full h-full object-cover"
-          />
-        </div>
-        <div v-else class="absolute inset-0 bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900"></div>
-        
-        <!-- Overlay -->
-        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/60 to-black/40"></div>
-        
-        <!-- Content -->
-        <div class="container mx-auto px-4 relative z-10 text-center">
-          <h1 class="text-4xl md:text-6xl lg:text-7xl font-bold mb-4 text-white drop-shadow-2xl">
-            {{ product.name }}
-          </h1>
-          <p v-if="product.description" class="text-lg md:text-xl text-gray-200 max-w-3xl mx-auto line-clamp-2 drop-shadow-lg">
-            {{ product.description.split('\n')[0] }}
-          </p>
-        </div>
-      </section>
 
-      <!-- Product Details -->
-      <section class="py-16 md:py-24 bg-gradient-to-br from-gray-50 via-white to-gray-50">
-        <div class="container mx-auto px-4 max-w-6xl">
-          <div class="bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden">
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-0">
-              <!-- Image -->
-              <div class="relative h-[400px] md:h-[500px] lg:h-full min-h-[400px] bg-gray-100">
+    <div v-else>
+      <section class="noise relative isolate overflow-hidden pb-16 pt-32 md:pb-24 md:pt-40">
+        <div class="absolute inset-0 -z-10">
+          <NuxtImg :src="product.image_url || '/thandep.jpg'" alt="" width="1920" format="webp" class="h-full w-full object-cover opacity-20 blur-sm" />
+          <div class="absolute inset-0 bg-gradient-to-b from-coal-950/70 via-coal-950/90 to-coal-950" />
+          <div class="grid-bg absolute inset-0" />
+          <div class="absolute -left-40 top-20 h-[420px] w-[420px] rounded-full bg-neon-500/20 blur-[120px]" />
+        </div>
+
+        <div class="mx-auto max-w-7xl px-4 md:px-6">
+          <nav class="mb-10 flex flex-wrap items-center gap-2 font-mono text-xs uppercase tracking-[0.18em] text-slate-500">
+            <NuxtLink to="/" class="hover:text-neon-300">Trang chủ</NuxtLink>
+            <span class="text-white/20">/</span>
+            <NuxtLink to="/products" class="hover:text-neon-300">Sản phẩm</NuxtLink>
+            <span class="text-white/20">/</span>
+            <span class="max-w-[16rem] truncate text-slate-300">{{ product.name }}</span>
+          </nav>
+
+          <div class="grid grid-cols-1 items-start gap-10 lg:grid-cols-2 lg:gap-16">
+            <!-- Image -->
+            <div class="hud relative">
+              <span class="hud-c tl" /><span class="hud-c tr" /><span class="hud-c bl" /><span class="hud-c br" />
+              <div class="relative aspect-square overflow-hidden bg-coal-850">
                 <NuxtImg
-                  v-if="product.image_url"
-                  :src="product.image_url"
+                  :src="product.image_url || '/thandep.jpg'"
                   :alt="product.name"
-                  class="w-full h-full object-cover"
+                  width="1000"
+                  format="webp"
+                  class="h-full w-full object-cover"
+                  loading="eager"
                 />
-                <div v-else class="w-full h-full flex items-center justify-center text-gray-400">
-                  <svg class="h-32 w-32" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                  </svg>
+                <div class="absolute inset-0 bg-gradient-to-t from-coal-950/60 via-transparent to-transparent" />
+                <div class="absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-transparent via-neon-400/15 to-transparent" style="animation: scan 5s linear infinite" />
+              </div>
+            </div>
+
+            <!-- Details -->
+            <div class="lg:sticky lg:top-28">
+              <div class="eyebrow">Sản phẩm</div>
+              <h1 class="font-display mt-5 text-4xl font-bold leading-tight text-white md:text-5xl">{{ product.name }}</h1>
+
+              <p v-if="product.description" class="mt-6 whitespace-pre-line text-lg leading-relaxed text-slate-400">
+                {{ product.description }}
+              </p>
+
+              <div v-if="specs.length" class="mt-10 overflow-hidden rounded-2xl border border-white/[0.08] bg-coal-850/70">
+                <div class="flex items-center justify-between border-b border-white/5 px-5 py-3 font-mono text-xs uppercase tracking-widest text-slate-500">
+                  <span>Thông số kỹ thuật</span>
+                  <span class="text-neon-300">SPEC</span>
                 </div>
+                <dl>
+                  <div
+                    v-for="([key, value], i) in specs"
+                    :key="key"
+                    :class="['flex items-center justify-between gap-6 px-5 py-4', i < specs.length - 1 ? 'border-b border-white/5' : '']"
+                  >
+                    <dt class="text-sm text-slate-400">{{ key }}</dt>
+                    <dd class="text-right font-mono text-sm font-medium text-white">{{ value }}</dd>
+                  </div>
+                </dl>
               </div>
 
-              <!-- Details -->
-              <div class="p-8 md:p-12 flex flex-col justify-between">
-                <div>
-                  <h2 class="text-3xl md:text-4xl font-bold mb-6 text-gray-900">{{ product.name }}</h2>
-                  
-                  <!-- Description -->
-                  <div v-if="product.description" class="mb-8">
-                    <h3 class="text-xl font-semibold mb-4 text-gray-900">Mô tả</h3>
-                    <div class="prose max-w-none">
-                      <p class="text-gray-700 leading-relaxed whitespace-pre-line">{{ product.description }}</p>
-                    </div>
-                  </div>
-
-                  <!-- Specifications -->
-                  <div v-if="product.specifications" class="mb-8">
-                    <h3 class="text-xl font-semibold mb-4 text-gray-900">Thông số kỹ thuật</h3>
-                    <dl class="space-y-3">
-                      <div v-for="(value, key) in product.specifications" :key="key" class="flex border-b border-gray-200 pb-3">
-                        <dt class="font-semibold w-1/3 text-gray-900">{{ key }}:</dt>
-                        <dd class="text-gray-700 flex-1">{{ value }}</dd>
-                      </div>
-                    </dl>
-                  </div>
-                </div>
-
-                <!-- Contact CTA -->
-                <div class="border-t border-gray-200 pt-6 mt-6">
-                  <NuxtLink
-                    to="/contact"
-                    class="inline-flex items-center justify-center w-full px-6 py-4 bg-primary text-black rounded-xl font-semibold hover:bg-primary/90 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
-                  >
-                    <span>Liên hệ đặt hàng</span>
-                    <svg class="ml-2 h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-                    </svg>
-                  </NuxtLink>
-                </div>
+              <div class="mt-10 flex flex-col gap-3 sm:flex-row">
+                <NuxtLink to="/contact" class="btn btn-ember flex-1">
+                  Liên hệ đặt hàng
+                  <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14m-6-6 6 6-6 6" />
+                  </svg>
+                </NuxtLink>
+                <a href="tel:0933888575" class="btn btn-ghost flex-1">Gọi 0933 888 575</a>
               </div>
             </div>
           </div>
@@ -109,6 +98,12 @@ const { data: response, pending, error } = await useFetch<APIResponse<Product>>(
 
 const product = computed(() => response.value?.data);
 
+const specs = computed<[string, any][]>(() => {
+  const s = product.value?.specifications;
+  if (!s || typeof s !== "object") return [];
+  return Object.entries(s);
+});
+
 useHead({
   title: product.value ? `${product.value.name} - Thành Hưng Phát` : "Sản phẩm",
   meta: [
@@ -119,4 +114,3 @@ useHead({
   ],
 });
 </script>
-
