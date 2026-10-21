@@ -72,13 +72,8 @@
     <section class="relative border-y border-white/5 bg-coal-900/60 py-24 md:py-28">
       <div class="grid-bg pointer-events-none absolute inset-0 opacity-40" />
       <div class="relative mx-auto grid max-w-7xl grid-cols-1 items-center gap-12 px-4 md:px-6 lg:grid-cols-12">
-        <div v-reveal class="hud relative mx-auto w-full max-w-sm lg:col-span-4">
-          <span class="hud-c tl" /><span class="hud-c tr" /><span class="hud-c bl" /><span class="hud-c br" />
-          <div class="relative aspect-square overflow-hidden">
-            <NuxtImg src="/hotheanh.jpg" alt="Ông Hồ Thế Anh - Đại diện pháp luật" width="600" format="webp" class="h-full w-full object-cover" loading="lazy" />
-            <div class="absolute inset-0 bg-gradient-to-t from-coal-950/70 via-transparent to-transparent" />
-            <div class="absolute bottom-4 left-4 font-mono text-[11px] uppercase tracking-widest text-neon-300">ID · Đại diện pháp luật</div>
-          </div>
+        <div v-reveal class="relative mx-auto w-[min(70vw,300px)] lg:col-span-4 lg:w-full lg:max-w-[320px]">
+          <EnergyCore />
         </div>
         <div class="lg:col-span-8">
           <SectionHeading eyebrow="Đại diện pháp luật" index="02">Ông Hồ Thế Anh</SectionHeading>
